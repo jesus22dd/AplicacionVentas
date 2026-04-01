@@ -1,0 +1,220 @@
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║         GUÍA DE IMÁGENES — ElectroShop POS                                     ║
+║         Qué imágenes añadir, con qué nombre y en qué formato                   ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+INSTRUCCIONES GENERALES
+────────────────────────────────────────────────────────────────────────────────────
+
+  · Todas las imágenes deben colocarse en esta carpeta: /app2/imagenes/
+  · Formato recomendado: WebP (el sistema también acepta JPG, PNG, JPEG)
+  · Si entregas JPG o PNG, el sistema las convertirá automáticamente a WebP
+    al cargarlas desde el módulo de Productos (botón "Subir imagen")
+  · Resolución entrada recomendada: 400×400px a 800×800px
+  · El sistema recorta automáticamente a 180×180px al guardar
+  · Fondo recomendado: blanco o transparente
+  · Imágenes limpias, sin marcas de agua
+
+  NOMENCLATURA DE ARCHIVOS:
+  · Usa el mismo código del producto: CAB001.webp, AUD001.webp, etc.
+  · Mayúsculas o minúsculas, el sistema no distingue
+  · Sin espacios ni caracteres especiales
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C01 — CABLES Y ADAPTADORES (12 imágenes)  Prefijo: CAB
+────────────────────────────────────────────────────────────────────────────────────
+
+  Archivo           Producto                                  Búsqueda sugerida
+  ─────────────────────────────────────────────────────────────────────────────────
+  CAB001.webp  →  Cable USB-C a USB-C Anker 240W 2m          "Anker USB-C cable white background"
+  CAB002.webp  →  Cable HDMI 4K 60Hz Ugreen 3m               "Ugreen HDMI cable product shot"
+  CAB003.webp  →  Cable USB-A a Lightning iPhone 2m           "USB-A Lightning cable white bg"
+  CAB004.webp  →  Hub USB-C 7 en 1 Anker 555                 "Anker 555 USB-C hub product"
+  CAB005.webp  →  Cable Auxiliar 3.5mm Trenzado 1.5m          "3.5mm braided audio cable"
+  CAB006.webp  →  Adaptador HDMI a VGA Full HD                "HDMI VGA adapter white background"
+  CAB007.webp  →  Cable Micro-USB Trenzado 1m Ugreen          "Ugreen micro USB braided cable"
+  CAB008.webp  →  Adaptador USB-C a Jack 3.5mm                "USB-C 3.5mm adapter product"
+  CAB009.webp  →  Cable DisplayPort 4K 144Hz 2m               "DisplayPort cable 4K product"
+  CAB010.webp  →  Extensión USB 3.0 de 3m                     "USB 3.0 extension cable product"
+  CAB011.webp  →  Adaptador USB-C a HDMI 4K                   "USB-C to HDMI adapter product"
+  CAB012.webp  →  Cable Ethernet Cat6 5m RJ45                 "Cat6 ethernet cable product"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C02 — AUDIO Y SONIDO (12 imágenes)  Prefijo: AUD
+────────────────────────────────────────────────────────────────────────────────────
+
+  AUD001.webp  →  Auriculares Sony WH-1000XM5 NC BT           "Sony WH-1000XM5 black product"
+  AUD002.webp  →  Auriculares JBL Tune 770NC Bluetooth         "JBL Tune 770NC product shot"
+  AUD003.webp  →  TWS Samsung Galaxy Buds2 Pro                 "Samsung Galaxy Buds2 Pro case"
+  AUD004.webp  →  TWS Xiaomi Redmi Buds 4 Pro                  "Xiaomi Redmi Buds 4 Pro white"
+  AUD005.webp  →  Parlante Bluetooth JBL Charge 5              "JBL Charge 5 speaker product"
+  AUD006.webp  →  Parlante Bluetooth Sony SRS-XB43             "Sony SRS-XB43 speaker product"
+  AUD007.webp  →  Micrófono USB Blue Snowball iCE              "Blue Snowball iCE USB mic white"
+  AUD008.webp  →  Auriculares Gaming HyperX Cloud II           "HyperX Cloud II gaming headset"
+  AUD009.webp  →  Parlante Portátil Anker SoundCore 3          "Anker Soundcore 3 speaker"
+  AUD010.webp  →  Soundbar Xiaomi 2.0 80W BT                   "Xiaomi soundbar 2.0 product"
+  AUD011.webp  →  Auriculares In-Ear Jabra Elite 4 Active      "Jabra Elite 4 Active earbuds"
+  AUD012.webp  →  Altavoz Portátil JBL Go 4                   "JBL Go 4 mini speaker product"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C03 — FOTOGRAFÍA Y VIDEO (12 imágenes)  Prefijo: FOT
+────────────────────────────────────────────────────────────────────────────────────
+
+  FOT001.webp  →  Cámara GoPro Hero 12 Black                  "GoPro Hero 12 Black product"
+  FOT002.webp  →  Cámara Sony ZV-E10 Mirrorless Kit 16-50     "Sony ZV-E10 mirrorless product"
+  FOT003.webp  →  Cámara de Acción AKASO V50 Elite 4K         "AKASO V50 Elite action camera"
+  FOT004.webp  →  Gimbal Zhiyun Smooth 5S para Celular        "Zhiyun Smooth 5S gimbal product"
+  FOT005.webp  →  Memoria SD SanDisk Extreme 128GB V30        "SanDisk Extreme SD card 128GB"
+  FOT006.webp  →  Memoria SD Samsung Pro Plus 256GB           "Samsung Pro Plus SD 256GB"
+  FOT007.webp  →  Trípode Flexible Joby GorillaPod 3K         "Joby GorillaPod 3K tripod"
+  FOT008.webp  →  Ring Light LED 10" con Tripié y Soporte     "ring light LED 10 inch product"
+  FOT009.webp  →  Filtro ND Variable 58mm para Cámara         "ND variable filter 58mm lens"
+  FOT010.webp  →  Batería Extra NP-FZ100 para Sony Alpha      "Sony NP-FZ100 battery product"
+  FOT011.webp  →  Bolso Lowepro Fastpack BP 250 AW II         "Lowepro Fastpack backpack camera"
+  FOT012.webp  →  Control Remoto Wi-Fi para GoPro Hero 12     "GoPro remote control Wi-Fi"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C04 — DRONES (12 imágenes)  Prefijo: DRO
+────────────────────────────────────────────────────────────────────────────────────
+
+  DRO001.webp  →  DJI Mini 4 Pro Drone 4K/60fps               "DJI Mini 4 Pro drone product"
+  DRO002.webp  →  DJI Air 3 Combo Fly More                    "DJI Air 3 drone white background"
+  DRO003.webp  →  DJI Mini 3 Drone Solo                       "DJI Mini 3 drone product shot"
+  DRO004.webp  →  DJI Avata 2 FPV Combo                       "DJI Avata 2 FPV drone product"
+  DRO005.webp  →  Holy Stone HS720E 4K GPS Drone              "Holy Stone HS720E drone product"
+  DRO006.webp  →  Batería Inteligente DJI Mini 4 Pro          "DJI Mini 4 Pro intelligent battery"
+  DRO007.webp  →  Control Remoto DJI RC2 con Pantalla         "DJI RC2 remote controller screen"
+  DRO008.webp  →  Kit de Carga Múltiple DJI Mini 4 Pro        "DJI Mini 4 Pro charging hub"
+  DRO009.webp  →  Bolsa de Transporte Shoulder DJI            "DJI shoulder bag drone product"
+  DRO010.webp  →  Protector de Hélices DJI Mini 4 Pro         "DJI Mini 4 Pro propeller guards"
+  DRO011.webp  →  Filtros ND DJI Mini 4 Pro Set x4            "DJI Mini 4 Pro ND filter set"
+  DRO012.webp  →  Potensic ATOM SE 4K GPS Drone               "Potensic ATOM SE drone product"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C05 — SMARTPHONES Y ACCESORIOS (12 imágenes)  Prefijo: SMT
+────────────────────────────────────────────────────────────────────────────────────
+
+  SMT001.webp  →  Samsung Galaxy S23 FE 256GB                 "Samsung Galaxy S23 FE product"
+  SMT002.webp  →  Xiaomi 13T Pro 256GB                        "Xiaomi 13T Pro product shot"
+  SMT003.webp  →  Cargador Inalámbrico 15W Qi MagSafe         "MagSafe wireless charger product"
+  SMT004.webp  →  Cargador Rápido 65W GaN USB-C               "65W GaN USB-C charger product"
+  SMT005.webp  →  Power Bank Xiaomi 33W 20000mAh              "Xiaomi power bank 20000 product"
+  SMT006.webp  →  Soporte Magnético para Auto Ventilación      "magnetic phone car mount vent"
+  SMT007.webp  →  Funda Protectora Samsung S23 Ultra          "Samsung S23 Ultra case product"
+  SMT008.webp  →  Vidrio Templado iPhone 15 Pro Max           "iPhone 15 Pro Max tempered glass"
+  SMT009.webp  →  Anillo de Luz LED para Celular 26cm         "LED ring light phone 26cm"
+  SMT010.webp  →  Pop Socket MagSafe Premium                  "MagSafe popsocket phone grip"
+  SMT011.webp  →  Soporte Escritorio Ajustable para Celular   "adjustable phone desk stand product"
+  SMT012.webp  →  Funda Anti-Shock con Tapa iPhone 15         "iPhone 15 anti-shock case product"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C06 — CÓMPUTO Y PERIFÉRICOS (12 imágenes)  Prefijo: COM
+────────────────────────────────────────────────────────────────────────────────────
+
+  COM001.webp  →  Laptop Lenovo IdeaPad 5i Core i5 15.6"     "Lenovo IdeaPad 5i laptop product"
+  COM002.webp  →  Mouse Logitech MX Master 3S Inalámbrico    "Logitech MX Master 3S mouse"
+  COM003.webp  →  Teclado Mecánico Keychron K6 Hot Swap       "Keychron K6 mechanical keyboard"
+  COM004.webp  →  Monitor LG 27" IPS 144Hz FHD                "LG 27 IPS monitor product"
+  COM005.webp  →  Webcam Logitech C920 HD Pro 1080p           "Logitech C920 webcam product"
+  COM006.webp  →  SSD Externo Samsung T7 1TB USB 3.2          "Samsung T7 SSD external product"
+  COM007.webp  →  SSD Interno Kingston NV2 1TB NVMe           "Kingston NV2 NVMe SSD product"
+  COM008.webp  →  RAM DDR4 16GB 3200MHz Kingston Fury         "Kingston Fury RAM 16GB product"
+  COM009.webp  →  Mousepad XXL RGB Redragon 900x400mm         "Redragon XXL RGB mousepad product"
+  COM010.webp  →  Stand Ventilado para Laptop Ajustable        "laptop stand adjustable product"
+  COM011.webp  →  Tarjeta de Captura Elgato HD60 X            "Elgato HD60 X capture card"
+  COM012.webp  →  Hub USB-C 4K HDMI Anker 555 8 en 1         "Anker 555 USB-C hub 8-in-1"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C07 — GAMING (12 imágenes)  Prefijo: GAM
+────────────────────────────────────────────────────────────────────────────────────
+
+  GAM001.webp  →  Control PS5 DualSense Blanco                "PS5 DualSense white controller"
+  GAM002.webp  →  Control Xbox Series X Inalámbrico           "Xbox Series X wireless controller"
+  GAM003.webp  →  Auriculares Razer BlackShark V2 Pro BT      "Razer BlackShark V2 Pro headset"
+  GAM004.webp  →  Mousepad Gaming SteelSeries QcK XXL         "SteelSeries QcK XXL mousepad"
+  GAM005.webp  →  Teclado Gaming Razer Huntsman Mini          "Razer Huntsman Mini keyboard"
+  GAM006.webp  →  Mouse Gaming Logitech G502 X Plus           "Logitech G502 X Plus mouse"
+  GAM007.webp  →  Silla Gaming Secretlab Titan Evo Negro      "Secretlab Titan Evo chair black"
+  GAM008.webp  →  Control Nintendo Switch Pro Controller      "Nintendo Switch Pro Controller"
+  GAM009.webp  →  Headset Gaming JBL Quantum 600 BT           "JBL Quantum 600 gaming headset"
+  GAM010.webp  →  Gamepad PC EasySMX X10 Hall Effect         "EasySMX X10 gamepad product"
+  GAM011.webp  →  Cooling Pad RGB para Laptops Gaming         "laptop cooling pad RGB gaming"
+  GAM012.webp  →  Reposa Muñecas Gel para Teclado             "keyboard wrist rest gel product"
+
+────────────────────────────────────────────────────────────────────────────────────
+CATEGORÍA C08 — REDES Y STREAMING (12 imágenes)  Prefijo: RED
+────────────────────────────────────────────────────────────────────────────────────
+
+  RED001.webp  →  Router WiFi 6 TP-Link Archer AX3000        "TP-Link Archer AX3000 router"
+  RED002.webp  →  Chromecast con Google TV 4K                 "Chromecast Google TV 4K product"
+  RED003.webp  →  Amazon Fire TV Stick 4K Max Gen2            "Fire TV Stick 4K Max product"
+  RED004.webp  →  Repetidor WiFi TP-Link RE705X AX3000        "TP-Link RE705X extender product"
+  RED005.webp  →  Switch TP-Link TL-SG108E 8 Puertos         "TP-Link 8 port switch product"
+  RED006.webp  →  Router Mesh TP-Link Deco XE75 Pack x2      "TP-Link Deco XE75 mesh router"
+  RED007.webp  →  Adaptador WiFi USB TP-Link Archer T3U       "TP-Link Archer T3U USB WiFi"
+  RED008.webp  →  Cable Ethernet Cat7 10m Flat Ugreen         "Ugreen Cat7 flat ethernet cable"
+  RED009.webp  →  Raspberry Pi 4 Model B 4GB                  "Raspberry Pi 4 Model B product"
+  RED010.webp  →  Powerline Adapter TP-Link AV1000 x2        "TP-Link AV1000 powerline adapter"
+  RED011.webp  →  Antena WiFi Externa 9dBi RP-SMA             "9dBi external WiFi antenna"
+  RED012.webp  →  Roku Streaming Stick 4K+                    "Roku Streaming Stick 4K product"
+
+────────────────────────────────────────────────────────────────────────────────────
+IMÁGENES DEL SISTEMA  (guardar en imagenes/sistema/)
+────────────────────────────────────────────────────────────────────────────────────
+
+  logo_electroshop.webp    → Logo oficial ElectroShop
+                             200×200px, fondo blanco, ícono fa-microchip
+                             azul (#2563eb) con texto "ES"
+
+  producto_placeholder.webp→ Placeholder productos sin foto
+                             400×400px, fondo #f8fafc, ícono fa-box gris
+                             (el sistema lo genera dinámicamente)
+
+  qr_pago.webp             → Imagen QR de cuenta QR Pago Simple
+                             600×600px, imprimible para mostrar en caja
+
+────────────────────────────────────────────────────────────────────────────────────
+DÓNDE CONSEGUIR LAS IMÁGENES
+────────────────────────────────────────────────────────────────────────────────────
+
+  1. Sitios oficiales de las marcas (DJI, Logitech, Sony, JBL, TP-Link)
+     → imágenes de prensa con fondo blanco de alta calidad
+
+  2. Amazon.com → buscar el modelo exacto, las imágenes del seller oficial
+     suelen estar en fondo blanco → clic derecho → Guardar imagen
+
+  3. Google Shopping → buscar "producto fondo blanco" → Imágenes
+     → filtrar por licencia si es para uso comercial
+
+  4. Unsplash.com / Pexels.com → para fotos generales de tecnología
+
+  5. Freepik.com → vectores e imágenes de productos tech (licencia gratuita
+     con atribución)
+
+  NOTA: Para uso demo/interno cualquier imagen basta.
+  Para uso comercial/público, asegurarse de usar imágenes con licencia libre.
+
+────────────────────────────────────────────────────────────────────────────────────
+RESUMEN DE CONTEO
+────────────────────────────────────────────────────────────────────────────────────
+
+  Categoría                Cantidad   Prefijo
+  ──────────────────────────────────────────────
+  Cables y Adaptadores     12         CAB
+  Audio y Sonido           12         AUD
+  Fotografía y Video       12         FOT
+  Drones                   12         DRO
+  Smartphones y Acces.     12         SMT
+  Cómputo y Periféricos    12         COM
+  Gaming                   12         GAM
+  Redes y Streaming        12         RED
+  ──────────────────────────────────────────────
+  TOTAL DE IMÁGENES        96         —
+  Imágenes del sistema      3         sistema/
+
+  TOTAL GENERAL: 99 imágenes
+
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║  Carga las imágenes desde Productos → editar producto → "Subir imagen"        ║
+║  El sistema las comprimirá a WebP automáticamente al guardar.                  ║
+╚══════════════════════════════════════════════════════════════════════════════════╝

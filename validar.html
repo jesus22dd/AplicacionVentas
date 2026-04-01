@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validar Documento — ElectroShop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .card { background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.1); max-width: 520px; width: 100%; overflow: hidden; }
+    .header { background: linear-gradient(135deg, #2563eb, #1d4ed8); padding: 32px 28px; text-align: center; color: #fff; }
+    .logo { width: 56px; height: 56px; border-radius: 14px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; margin: 0 auto 14px; }
+    .header h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .header p { font-size: 13px; opacity: .8; }
+    .body { padding: 28px; }
+    .status-box { border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px; }
+    .status-ok { background: #f0fdf4; border: 2px solid #86efac; }
+    .status-err { background: #fef2f2; border: 2px solid #fca5a5; }
+    .status-icon { font-size: 36px; margin-bottom: 10px; }
+    .status-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .status-ok .status-title { color: #15803d; }
+    .status-err .status-title { color: #dc2626; }
+    .status-sub { font-size: 13px; }
+    .status-ok .status-sub { color: #166534; }
+    .status-err .status-sub { color: #991b1b; }
+    .info-grid { display: grid; gap: 10px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-label { color: #64748b; font-weight: 500; }
+    .info-value { font-weight: 700; color: #0f172a; text-align: right; max-width: 60%; }
+    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-ok { background: #dcfce7; color: #15803d; }
+    .badge-warn { background: #fef9c3; color: #854d0e; }
+    .badge-err { background: #fee2e2; color: #dc2626; }
+    .footer { background: #f8fafc; padding: 16px 28px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
+    .loading { text-align: center; padding: 40px; color: #64748b; }
+    .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="logo">E</div>
+      <h1>ElectroShop POS</h1>
+      <p>Verificación de documento</p>
+    </div>
+    <div class="body" id="resultBody">
+      <div class="loading">
+        <div class="spinner"></div>
+        <div>Verificando documento...</div>
+      </div>
+    </div>
+    <div class="footer">
+      ElectroShop POS v2.0 &nbsp;·&nbsp; Cochabamba, Bolivia &nbsp;·&nbsp; Verificación automática
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script>
+    (function () {
+      const params  = new URLSearchParams(location.search);
+      const id      = params.get('id')   || '';
+      const hash    = params.get('hash') || '';
+      const tipo    = params.get('tipo') || 'venta';
+
+      function render(html) {
+        document.getElementById('resultBody').innerHTML = html;
+      }
+
+      function statusBox(ok, title, sub) {
+        return `<div class="status-box ${ok ? 'status-ok' : 'status-err'}">
+          <div class="status-icon">${ok ? '✅' : '❌'}</div>
+          <div class="status-title">${title}</div>
+          <div class="status-sub">${sub}</div>
+        </div>`;
+      }
+
+      function infoRow(label, value) {
+        return `<div class="info-row"><span class="info-label">${label}</span><span class="info-value">${value}</span></div>`;
+      }
+
+      function badge(text, type) {
+        return `<span class="badge badge-${type}">${text}</span>`;
+      }
+
+      function fmtDate(str) {
+        if (!str) return '—';
+        const d = new Date(str.replace(' ', 'T'));
+        return d.toLocaleDateString('es-BO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      }
+
+      if (!id || !hash) {
+        render(statusBox(false, 'Enlace inválido', 'El código QR no contiene información válida. Solicita uno nuevo.'));
+        return;
+      }
+
+      // Look for quotation or sale
+      let doc = null;
+      let docType = '';
+
+      if (tipo === 'cotizacion') {
+        doc = (DB.quotations || []).find(q => q.id === id);
+        docType = 'cotizacion';
+      } else {
+        doc = (DB.sales || []).find(s => s.id === id);
+        docType = 'venta';
+      }
+
+      if (!doc) {
+        render(statusBox(false, 'Documento no encontrado', `No se encontró ningún documento con el ID "${id}" en el sistema.`));
+        return;
+      }
+
+      // Verify hash
+      const hashMatch = doc.qrHash && (doc.qrHash === hash || hash.startsWith(doc.qrHash.substring(0, 8)));
+
+      const sym = 'Bs.';
+      const cfg = DB.config || {};
+
+      if (docType === 'cotizacion') {
+        const q = doc;
+        const statusLabels = { pending:'Pendiente', accepted:'Aceptada', rejected:'Rechazada', expired:'Vencida' };
+        const statusBadge  = { pending:'warn', accepted:'ok', rejected:'err', expired:'warn' };
+        const now = new Date();
+        const validDate = new Date(q.validUntil);
+        const isExpired = validDate < now;
+
+        render(`
+          ${statusBox(hashMatch, hashMatch ? 'Documento Verificado' : 'Verificación Parcial', hashMatch ? 'La cotización es auténtica y fue emitida por ElectroShop.' : 'No se pudo verificar completamente la firma digital.')}
+          <div class="info-grid">
+            ${infoRow('Tipo', 'Cotización')}
+            ${infoRow('Número', `${q.id} — ${q.number||''}`)}
+            ${infoRow('Cliente', q.clientData?.name || '—')}
+            ${infoRow('Fecha de emisión', fmtDate(q.createdAt))}
+            ${infoRow('Válida hasta', fmtDate(q.validUntil) + (isExpired ? ' <span style="color:#dc2626;font-size:11px">(VENCIDA)</span>' : ''))}
+            ${infoRow('Artículos', q.items?.length + ' producto(s)')}
+            ${infoRow('Total USD', '$' + (q.total||0).toFixed(2))}
+            ${infoRow('Total Bs.', sym + ' ' + (q.totalBs||0).toFixed(2))}
+            ${infoRow('Estado', badge(statusLabels[q.status]||q.status, statusBadge[q.status]||'warn'))}
+          </div>`);
+      } else {
+        const s = doc;
+        const payLabels = { efectivo:'Efectivo', tarjeta:'Tarjeta', transferencia:'Transferencia', qr:'QR', delivery:'Delivery' };
+        const totalBs = (s.total * (cfg.exchangeRate || 9.35)).toFixed(2);
+
+        render(`
+          ${statusBox(hashMatch, hashMatch ? 'Venta Verificada' : 'Verificación Parcial', hashMatch ? 'La venta es auténtica y fue registrada en ElectroShop.' : 'No se pudo verificar completamente la firma digital.')}
+          <div class="info-grid">
+            ${infoRow('Tipo', 'Venta')}
+            ${infoRow('ID de venta', s.id)}
+            ${infoRow('Cliente', s.custName || '—')}
+            ${infoRow('Cajero/a', s.workName || '—')}
+            ${infoRow('Fecha', fmtDate(s.date))}
+            ${infoRow('Artículos', (s.items?.length||0) + ' producto(s)')}
+            ${infoRow('Total USD', '$' + (s.total||0).toFixed(2))}
+            ${infoRow('Total Bs.', sym + ' ' + totalBs)}
+            ${infoRow('Método de pago', payLabels[s.method]||s.method||'—')}
+            ${infoRow('Estado', badge('Completada', 'ok'))}
+          </div>`);
+      }
+    })();
+  </script>
+</body>
+</html>

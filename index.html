@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ElectroShop POS — Sistema de Gestión Comercial</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><i class="fas fa-microchip"></i></div>
+      <div class="logo-text">
+        <span class="brand-name">ElectroShop</span>
+        <span class="brand-sub">POS System v2.0</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Principal</div>
+    <a class="nav-item active" data-module="dashboard" href="#">
+      <i class="fas fa-chart-pie"></i><span>Dashboard</span>
+    </a>
+    <a class="nav-item" data-module="pos" href="#">
+      <i class="fas fa-cash-register"></i><span>Punto de Venta</span>
+      <span class="nav-badge">POS</span>
+    </a>
+    <a class="nav-item" data-module="caja" href="#">
+      <i class="fas fa-vault"></i><span>Corte de Caja</span>
+    </a>
+
+    <div class="nav-group-label">Inventario</div>
+    <a class="nav-item" data-module="products" href="#">
+      <i class="fas fa-boxes-stacked"></i><span>Productos</span>
+    </a>
+    <a class="nav-item" data-module="inventory" href="#">
+      <i class="fas fa-warehouse"></i><span>Inventario</span>
+    </a>
+    <a class="nav-item" data-module="categories" href="#">
+      <i class="fas fa-tags"></i><span>Categorías</span>
+    </a>
+
+    <div class="nav-group-label">Gestión</div>
+    <a class="nav-item" data-module="workers" href="#">
+      <i class="fas fa-user-tie"></i><span>Trabajadores</span>
+    </a>
+    <a class="nav-item" data-module="customers" href="#">
+      <i class="fas fa-users"></i><span>Clientes</span>
+    </a>
+    <a class="nav-item" data-module="suppliers" href="#">
+      <i class="fas fa-truck"></i><span>Proveedores</span>
+    </a>
+    <a class="nav-item" data-module="purchases" href="#">
+      <i class="fas fa-cart-flatbed"></i><span>Órdenes de Compra</span>
+    </a>
+    <a class="nav-item" data-module="returns" href="#">
+      <i class="fas fa-rotate-left"></i><span>Devoluciones</span>
+    </a>
+
+    <div class="nav-group-label">Análisis</div>
+    <a class="nav-item" data-module="sales" href="#">
+      <i class="fas fa-receipt"></i><span>Historial Ventas</span>
+    </a>
+    <a class="nav-item" data-module="reports" href="#">
+      <i class="fas fa-chart-bar"></i><span>Reportes</span>
+    </a>
+    <a class="nav-item" data-module="quotations" href="#">
+      <i class="fas fa-file-invoice"></i><span>Cotizaciones</span>
+    </a>
+    <a class="nav-item" data-module="pendientes" href="#">
+      <i class="fas fa-piggy-bank"></i><span>Pendientes</span>
+    </a>
+
+    <div class="nav-group-label">Sistema</div>
+    <a class="nav-item" data-module="roles" href="#">
+      <i class="fas fa-shield-halved"></i><span>Roles y Permisos</span>
+    </a>
+    <a class="nav-item" data-module="config" href="#">
+      <i class="fas fa-gear"></i><span>Configuración</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebarAvatar">CM</div>
+      <div class="sidebar-user-info">
+        <span class="sidebar-user-name" id="sidebarUserName">Administrador</span>
+        <span class="sidebar-user-role" id="sidebarUserRole">Administrador</span>
+      </div>
+      <button class="sidebar-logout" title="Cerrar sesión" onclick="Auth.logout()"><i class="fas fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN WRAPPER ===== -->
+<div class="main-wrapper" id="mainWrapper">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="btn-toggle-sidebar" id="btnToggleSidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="breadcrumb">
+        <i class="fas fa-chart-pie"></i>
+        <span id="breadcrumbText">Dashboard</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-date">
+        <i class="fas fa-calendar-days"></i>
+        <span id="topbarDate"></span>
+      </div>
+      <div class="topbar-time">
+        <i class="fas fa-clock"></i>
+        <span id="topbarTime"></span>
+      </div>
+      <button class="topbar-btn" id="btnNotif" title="Notificaciones">
+        <i class="fas fa-bell"></i>
+        <span class="notif-dot" id="notifDot"></span>
+      </button>
+      <div class="topbar-profile" onclick="Auth.logout()" title="Cerrar sesión">
+        <div class="topbar-avatar" id="topbarAvatar">CM</div>
+        <span class="topbar-username" id="topbarUserName">Administrador</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT AREA -->
+  <main class="content-area" id="contentArea">
+    <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+  </main>
+</div>
+
+<!-- ===== GLOBAL MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-header">
+      <h3 id="modalTitle">Título</h3>
+      <button class="modal-close-btn" onclick="closeModal()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ===== RECEIPT MODAL ===== -->
+<div class="modal-overlay" id="receiptOverlay">
+  <div class="receipt-modal" id="receiptModal">
+    <div class="receipt-actions">
+      <button class="btn btn-primary" onclick="printReceipt()"><i class="fas fa-print"></i> Imprimir</button>
+      <button class="btn btn-success" onclick="downloadReceiptPDF()"><i class="fas fa-file-pdf"></i> PDF</button>
+      <button class="btn btn-success" onclick="sendReceiptWhatsApp()" style="background:#25d366;border-color:#25d366"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+      <button class="btn btn-secondary" onclick="closeReceipt()"><i class="fas fa-xmark"></i> Cerrar</button>
+    </div>
+    <div id="receiptContent"></div>
+  </div>
+</div>
+
+<!-- ===== SIDEBAR OVERLAY (mobile) ===== -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebarMobile()"></div>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== CONFIRM DIALOG ===== -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon"><i class="fas fa-triangle-exclamation"></i></div>
+    <h4 id="confirmTitle">¿Estás seguro?</h4>
+    <p id="confirmMsg">Esta acción no se puede deshacer.</p>
+    <div class="confirm-btns">
+      <button class="btn btn-secondary" onclick="closeConfirm()">Cancelar</button>
+      <button class="btn btn-danger" id="confirmOkBtn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen" class="login-screen">
+  <!-- Background blobs -->
+  <div class="login-blob login-blob-1"></div>
+  <div class="login-blob login-blob-2"></div>
+  <div class="login-blob login-blob-3"></div>
+
+  <!-- Left panel -->
+  <div class="login-left">
+    <div class="login-brand">
+      <div class="login-brand-icon"><i class="fas fa-microchip"></i></div>
+      <div>
+        <div class="login-brand-name">ElectroShop</div>
+        <div class="login-brand-tag">POS System v2.0</div>
+      </div>
+    </div>
+
+    <div class="login-hero">
+      <h1 class="login-headline">Tecnología para<br/>tu negocio <span>tech</span></h1>
+      <p class="login-sub">Sistema completo de punto de venta, inventario, cotizaciones y gestión para tu tienda de tecnología.</p>
+    </div>
+
+    <div class="login-features">
+      <div class="login-feature"><div class="lf-icon"><i class="fas fa-cash-register"></i></div><div><strong>Punto de Venta</strong><span>Ventas rápidas con factura PDF</span></div></div>
+      <div class="login-feature"><div class="lf-icon"><i class="fas fa-file-invoice"></i></div><div><strong>Cotizaciones profesionales</strong><span>PDF con QR de validación</span></div></div>
+      <div class="login-feature"><div class="lf-icon"><i class="fas fa-chart-bar"></i></div><div><strong>Reportes y análisis</strong><span>Gráficas y exportación PDF/CSV</span></div></div>
+      <div class="login-feature"><div class="lf-icon"><i class="fas fa-shield-halved"></i></div><div><strong>Roles y permisos</strong><span>Control de acceso granular</span></div></div>
+    </div>
+
+    <div class="login-footer-brand">© 2026 ElectroShop POS · Todos los derechos reservados</div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="login-right">
+    <div class="login-card">
+      <!-- Card header -->
+      <div class="login-card-header">
+        <div class="login-card-icon"><i class="fas fa-lock"></i></div>
+        <h2>Iniciar Sesión</h2>
+        <p>Ingresa tus credenciales para acceder al sistema</p>
+      </div>
+
+      <!-- Error message -->
+      <div class="login-error" id="loginError">
+        <i class="fas fa-circle-xmark"></i>
+        <span id="loginErrorMsg">Credenciales incorrectas</span>
+      </div>
+
+      <!-- Form -->
+      <form class="login-form" id="loginForm" onsubmit="Auth.login(event)">
+        <div class="login-field">
+          <label>Correo Electrónico</label>
+          <div class="login-input-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="loginEmail" placeholder="correo@electroshop.bo" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="login-field">
+          <label>Contraseña</label>
+          <div class="login-input-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" />
+            <button type="button" class="login-eye" onclick="Auth.togglePassword()" id="loginEyeBtn">
+              <i class="fas fa-eye" id="loginEyeIcon"></i>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="login-submit" id="loginSubmitBtn">
+          <span id="loginBtnText"><i class="fas fa-right-to-bracket"></i> Entrar al Sistema</span>
+          <span id="loginBtnLoad" style="display:none"><i class="fas fa-spinner fa-spin"></i> Verificando...</span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="login-divider"><span>Acceso rápido</span></div>
+
+      <!-- Demo credentials -->
+      <div class="login-credentials" id="loginCredentials">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/modules/dashboard.js"></script>
+<script src="js/modules/pos.js"></script>
+<script src="js/modules/products.js"></script>
+<script src="js/modules/inventory.js"></script>
+<script src="js/modules/categories.js"></script>
+<script src="js/modules/workers.js"></script>
+<script src="js/modules/customers.js"></script>
+<script src="js/modules/suppliers.js"></script>
+<script src="js/modules/sales.js"></script>
+<script src="js/modules/reports.js"></script>
+<script src="js/modules/caja.js"></script>
+<script src="js/modules/purchases.js"></script>
+<script src="js/modules/returns.js"></script>
+<script src="js/modules/config.js"></script>
+<script src="js/modules/quotations.js"></script>
+<script src="js/modules/pendientes.js"></script>
+<script src="js/modules/roles.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
