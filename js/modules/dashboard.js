@@ -172,7 +172,7 @@ const DashboardModule = {
         <button class="btn btn-sm btn-outline-primary" onclick="navigate('sales')">Ver todo</button>
       </div>
       <div class="table-wrap">
-        <table class="recent-sales-table tbl-recent-sales">
+        <table class="recent-sales-table tbl-recent-sales mobile-cards">
           <thead>
             <tr>
               <th>#</th><th>Fecha</th><th>Cliente</th><th>Cajero</th><th>Productos</th><th>Total</th><th>Pago</th><th>Acción</th>
@@ -189,14 +189,14 @@ const DashboardModule = {
                 : s.workName;
               return `
             <tr>
-              <td><span class="badge badge-primary">${s.id}</span></td>
-              <td style="white-space:nowrap">${fmtDatetime(s.date)}</td>
-              <td>${s.custName}</td>
-              <td>${workerCell}</td>
-              <td><span class="badge badge-gray">${s.items.length} ítems</span></td>
-              <td><strong>${fmt(s.total)}</strong></td>
-              <td>${payBadge(s.method)}</td>
-              <td><button class="btn btn-sm btn-secondary" onclick="SalesModule.showDetail('${s.id}')"><i class="fas fa-eye"></i></button></td>
+              <td data-label="#"><span class="badge badge-primary">${s.id}</span></td>
+              <td data-label="Fecha" style="white-space:nowrap">${fmtDatetime(s.date)}</td>
+              <td data-label="Cliente">${s.custName}</td>
+              <td data-label="Cajero">${workerCell}</td>
+              <td data-label="Productos"><span class="badge badge-gray">${s.items.length} ítems</span></td>
+              <td data-label="Total"><strong>${fmt(s.total)}</strong></td>
+              <td data-label="Pago">${payBadge(s.method)}</td>
+              <td data-label="Acción"><button class="btn btn-sm btn-secondary" onclick="SalesModule.showDetail('${s.id}')"><i class="fas fa-eye"></i></button></td>
             </tr>`;}).join('')}
           </tbody>
         </table>

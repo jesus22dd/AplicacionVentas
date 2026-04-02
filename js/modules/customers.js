@@ -58,7 +58,7 @@ const CustomersModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-customers">
+        <table class="tbl-customers mobile-cards">
           <thead>
             <tr><th>Cliente</th><th>Contacto</th><th>RUC/CI</th><th>Tipo</th><th>Compras</th><th>Total Gastado</th><th>Puntos</th><th>Desde</th><th>Acciones</th></tr>
           </thead>
@@ -98,28 +98,28 @@ const CustomersModule = {
       const color = colors[i % colors.length];
       return `
       <tr>
-        <td>
+        <td data-label="Cliente">
           <div class="person-info">
             <div class="person-avatar" style="background:${color}">${initials}</div>
             <div><div class="person-name">${c.name}</div></div>
           </div>
         </td>
-        <td>
+        <td data-label="Contacto">
           <div style="font-size:12px">${c.email||'—'}</div>
           <div style="font-size:11px;color:var(--text-3)">${c.phone||'—'}</div>
         </td>
-        <td style="font-size:12px">${c.ruc||'—'}</td>
-        <td>${custTypeBadge(c.type)}</td>
-        <td><span class="badge badge-gray">${c.purchases} compras</span></td>
-        <td><strong>${fmt(c.spent)}</strong></td>
-        <td>
+        <td data-label="RUC/CI" style="font-size:12px">${c.ruc||'—'}</td>
+        <td data-label="Tipo">${custTypeBadge(c.type)}</td>
+        <td data-label="Compras"><span class="badge badge-gray">${c.purchases} compras</span></td>
+        <td data-label="Total Gastado"><strong>${fmt(c.spent)}</strong></td>
+        <td data-label="Puntos">
           <div style="display:flex;align-items:center;gap:6px">
             <i class="fas fa-star" style="color:var(--warning);font-size:11px"></i>
             <strong>${fmtNum(c.points)}</strong>
           </div>
         </td>
-        <td style="font-size:12px">${fmtDate(c.since)}</td>
-        <td>
+        <td data-label="Desde" style="font-size:12px">${fmtDate(c.since)}</td>
+        <td data-label="Acciones">
           <div class="d-flex gap-8">
             <button class="btn btn-sm btn-secondary btn-icon" onclick="CustomersModule.viewDetail('${c.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
             <button class="btn btn-sm btn-secondary btn-icon" onclick="CustomersModule.openForm('${c.id}')" title="Editar"><i class="fas fa-pen"></i></button>

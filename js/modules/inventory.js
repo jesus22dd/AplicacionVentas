@@ -144,7 +144,7 @@ const InventoryModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-stock">
+        <table class="tbl-stock mobile-cards">
           <thead>
             <tr><th>Código</th><th>Producto</th><th>Categoría</th><th>Stock Actual</th><th>Stock Mín.</th><th>Estado</th><th>P. Compra</th><th>Valor</th><th>Ajustar</th></tr>
           </thead>
@@ -155,25 +155,25 @@ const InventoryModule = {
               const pct = Math.min(100, Math.round(p.stock/Math.max(p.minStock*3,1)*100));
               const color = p.stock<=0?'var(--danger)':p.stock<=p.minStock?'var(--warning)':'var(--secondary)';
               return `<tr>
-                <td><span class="badge badge-gray">${p.code}</span></td>
-                <td>
+                <td data-label="Código"><span class="badge badge-gray">${p.code}</span></td>
+                <td data-label="Producto">
                   <div class="product-cell">
                     ${prodIcon(p.catId)}
                     <span style="font-weight:600">${p.name}</span>
                   </div>
                 </td>
-                <td><span style="font-size:12px;color:var(--text-2)">${cat?cat.name:'—'}</span></td>
-                <td>
+                <td data-label="Categoría"><span style="font-size:12px;color:var(--text-2)">${cat?cat.name:'—'}</span></td>
+                <td data-label="Stock Actual">
                   <div class="stock-bar-wrap" style="width:100px">
                     <div class="stock-bar"><div class="stock-bar-fill" style="width:${pct}%;background:${color}"></div></div>
                     <div class="stock-val"><strong>${p.stock}</strong> ${p.unit}</div>
                   </div>
                 </td>
-                <td>${p.minStock} ${p.unit}</td>
-                <td>${stockBadge(p.stock, p.minStock)}</td>
-                <td>${fmt(p.buyP)}</td>
-                <td><strong>${fmt(val)}</strong></td>
-                <td>
+                <td data-label="Stock Mín.">${p.minStock} ${p.unit}</td>
+                <td data-label="Estado">${stockBadge(p.stock, p.minStock)}</td>
+                <td data-label="P. Compra">${fmt(p.buyP)}</td>
+                <td data-label="Valor"><strong>${fmt(val)}</strong></td>
+                <td data-label="Ajustar">
                   <div class="d-flex gap-8">
                     <button class="btn btn-sm btn-success btn-icon" onclick="InventoryModule.quickAdjust('${p.id}','+')" title="Agregar"><i class="fas fa-plus"></i></button>
                     <button class="btn btn-sm btn-outline-danger btn-icon" onclick="InventoryModule.quickAdjust('${p.id}','-')" title="Reducir"><i class="fas fa-minus"></i></button>
@@ -236,7 +236,7 @@ const InventoryModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-movements">
+        <table class="tbl-movements mobile-cards">
           <thead>
             <tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Producto</th><th>Cantidad</th><th>Motivo</th><th>Proveedor</th><th>Responsable</th></tr>
           </thead>
@@ -249,14 +249,14 @@ const InventoryModule = {
                 : `<span class="badge badge-warning"><i class="fas fa-rotate"></i>Ajuste</span>`;
               const sup = m.supId ? DB.getSupplier(m.supId) : null;
               return `<tr>
-                <td><span class="badge badge-gray">${m.id}</span></td>
-                <td style="white-space:nowrap">${fmtDatetime(m.date)}</td>
-                <td>${typeBadge}</td>
-                <td style="font-weight:600">${m.prodName}</td>
-                <td><strong style="color:${m.qty>0?'var(--secondary)':'var(--danger)'}">${m.qty>0?'+':''}${m.qty}</strong></td>
-                <td style="font-size:12px">${m.reason}</td>
-                <td style="font-size:12px">${sup?sup.name:'—'}</td>
-                <td style="font-size:12px">${m.workName}</td>
+                <td data-label="#"><span class="badge badge-gray">${m.id}</span></td>
+                <td data-label="Fecha" style="white-space:nowrap">${fmtDatetime(m.date)}</td>
+                <td data-label="Tipo">${typeBadge}</td>
+                <td data-label="Producto" style="font-weight:600">${m.prodName}</td>
+                <td data-label="Cantidad"><strong style="color:${m.qty>0?'var(--secondary)':'var(--danger)'}">${m.qty>0?'+':''}${m.qty}</strong></td>
+                <td data-label="Motivo" style="font-size:12px">${m.reason}</td>
+                <td data-label="Proveedor" style="font-size:12px">${sup?sup.name:'—'}</td>
+                <td data-label="Responsable" style="font-size:12px">${m.workName}</td>
               </tr>`;
             }).join('')}
           </tbody>

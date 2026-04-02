@@ -73,7 +73,7 @@ const CajaModule = {
         <div class="card-title"><i class="fas fa-history"></i> Historial de Sesiones</div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-caja">
+        <table class="tbl-caja mobile-cards">
           <thead>
             <tr><th>ID</th><th>Apertura</th><th>Cierre</th><th>Cajero</th><th>Fondo Inicial</th><th>Conteo</th><th>Esperado</th><th>Diferencia</th><th>Estado</th><th>Acción</th></tr>
           </thead>
@@ -85,23 +85,23 @@ const CajaModule = {
                 const diffIcon  = s.diff === 0 ? 'fa-equals' : s.diff > 0 ? 'fa-arrow-up' : 'fa-arrow-down';
                 return `
                 <tr>
-                  <td><span class="badge badge-primary">${s.id}</span></td>
-                  <td style="font-size:12px">${fmtDatetime(s.openedAt)}</td>
-                  <td style="font-size:12px">${s.closedAt ? fmtDatetime(s.closedAt) : '—'}</td>
-                  <td>
+                  <td data-label="ID"><span class="badge badge-primary">${s.id}</span></td>
+                  <td data-label="Apertura" style="font-size:12px">${fmtDatetime(s.openedAt)}</td>
+                  <td data-label="Cierre" style="font-size:12px">${s.closedAt ? fmtDatetime(s.closedAt) : '—'}</td>
+                  <td data-label="Cajero">
                     <div class="person-info">
                       <div class="person-avatar" style="background:#3b82f6;width:28px;height:28px;font-size:10px">${s.workerName.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
                       <span style="font-size:13px">${s.workerName}</span>
                     </div>
                   </td>
-                  <td>${fmt(s.openAmt)}</td>
-                  <td><strong>${fmt(s.closingAmt)}</strong></td>
-                  <td>${fmt(s.expectedAmt)}</td>
-                  <td><span style="color:${diffClass};font-weight:700"><i class="fas ${diffIcon}"></i> ${fmt(Math.abs(s.diff))}</span></td>
-                  <td>${s.status === 'closed'
+                  <td data-label="Fondo Inicial">${fmt(s.openAmt)}</td>
+                  <td data-label="Conteo"><strong>${fmt(s.closingAmt)}</strong></td>
+                  <td data-label="Esperado">${fmt(s.expectedAmt)}</td>
+                  <td data-label="Diferencia"><span style="color:${diffClass};font-weight:700"><i class="fas ${diffIcon}"></i> ${fmt(Math.abs(s.diff))}</span></td>
+                  <td data-label="Estado">${s.status === 'closed'
                     ? `<span class="badge badge-gray"><i class="fas fa-lock"></i>Cerrada</span>`
                     : `<span class="badge badge-success"><i class="fas fa-lock-open"></i>Abierta</span>`}</td>
-                  <td>
+                  <td data-label="Acción">
                     <button class="btn btn-sm btn-secondary btn-icon" onclick="CajaModule.viewDetail('${s.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
                   </td>
                 </tr>`;

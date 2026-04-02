@@ -30,7 +30,7 @@ const CategoriesModule = {
         </select>
       </div>
       <div class="table-wrap">
-        <table class="tbl-categories">
+        <table class="tbl-categories mobile-cards">
           <thead>
             <tr><th>Categoría</th><th>Código</th><th>Producto</th><th>Stock</th><th>P. Venta</th><th>Ventas</th></tr>
           </thead>
@@ -80,17 +80,17 @@ const CategoriesModule = {
     tbody.innerHTML = prods.slice(0,30).map(p => {
       const cat = DB.getCat(p.catId);
       return `<tr>
-        <td><span class="badge" style="background:${cat?cat.bg:'#f1f5f9'};color:${cat?cat.color:'#64748b'}">${cat?cat.name:'—'}</span></td>
-        <td><span class="badge badge-gray">${p.code}</span></td>
-        <td>
+        <td data-label="Categoría"><span class="badge" style="background:${cat?cat.bg:'#f1f5f9'};color:${cat?cat.color:'#64748b'}">${cat?cat.name:'—'}</span></td>
+        <td data-label="Código"><span class="badge badge-gray">${p.code}</span></td>
+        <td data-label="Producto">
           <div class="product-cell">
             ${prodIcon(p.catId)}
             <span>${p.name}</span>
           </div>
         </td>
-        <td>${stockBadge(p.stock, p.minStock)}</td>
-        <td>${fmt(p.sellP)}</td>
-        <td><span class="badge badge-primary">${fmtNum(p.sold)} uds</span></td>
+        <td data-label="Stock">${stockBadge(p.stock, p.minStock)}</td>
+        <td data-label="P. Venta">${fmt(p.sellP)}</td>
+        <td data-label="Ventas"><span class="badge badge-primary">${fmtNum(p.sold)} uds</span></td>
       </tr>`;
     }).join('');
   },

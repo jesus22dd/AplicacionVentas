@@ -50,7 +50,7 @@ const SuppliersModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-suppliers">
+        <table class="tbl-suppliers mobile-cards">
           <thead>
             <tr><th>Empresa</th><th>Contacto</th><th>Email / Teléfono</th><th>RUC</th><th>Categorías</th><th>Condición Pago</th><th>Estado</th><th>Acciones</th></tr>
           </thead>
@@ -91,7 +91,7 @@ const SuppliersModule = {
       const productCount = DB.products.filter(p => p.supId === s.id).length;
       return `
       <tr>
-        <td>
+        <td data-label="Empresa">
           <div class="person-info">
             <div class="person-avatar" style="background:${color}">${initial}</div>
             <div>
@@ -100,16 +100,16 @@ const SuppliersModule = {
             </div>
           </div>
         </td>
-        <td style="font-size:12px">${s.contact}</td>
-        <td>
+        <td data-label="Contacto" style="font-size:12px">${s.contact}</td>
+        <td data-label="Email/Tel">
           <div style="font-size:12px">${s.email}</div>
           <div style="font-size:11px;color:var(--text-3)">${s.phone}</div>
         </td>
-        <td style="font-size:12px">${s.ruc}</td>
-        <td>${cats||'—'}</td>
-        <td><span class="badge badge-cyan">${s.terms}</span></td>
-        <td>${statusBadge(s.status)}</td>
-        <td>
+        <td data-label="RUC" style="font-size:12px">${s.ruc}</td>
+        <td data-label="Categorías">${cats||'—'}</td>
+        <td data-label="Cond. Pago"><span class="badge badge-cyan">${s.terms}</span></td>
+        <td data-label="Estado">${statusBadge(s.status)}</td>
+        <td data-label="Acciones">
           <div class="d-flex gap-8">
             <button class="btn btn-sm btn-secondary btn-icon" onclick="SuppliersModule.viewDetail('${s.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
             <button class="btn btn-sm btn-secondary btn-icon" onclick="SuppliersModule.openForm('${s.id}')" title="Editar"><i class="fas fa-pen"></i></button>

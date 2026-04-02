@@ -172,7 +172,7 @@ const ReportsModule = {
     <div class="card">
       <div class="card-header"><div class="card-title"><i class="fas fa-list"></i> Ranking Completo de Productos</div></div>
       <div class="table-wrap">
-        <table class="tbl-rpt-products">
+        <table class="tbl-rpt-products mobile-cards">
           <thead><tr><th>Rank</th><th>Producto</th><th>Categoría</th><th>Unidades Vendidas</th><th>P. Venta</th><th>Ingresos</th><th>Margen</th></tr></thead>
           <tbody>
             ${topSold.map((p,i)=>{
@@ -181,13 +181,13 @@ const ReportsModule = {
               const margin=(((p.sellP-p.buyP)/p.buyP)*100).toFixed(1);
               const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
               return `<tr>
-                <td><span class="badge badge-primary">${medal} #${i+1}</span></td>
-                <td><div class="product-cell">${prodIcon(p.catId)}<span style="font-weight:600">${p.name}</span></div></td>
-                <td><span class="badge" style="background:${cat?cat.bg:'#f1f5f9'};color:${cat?cat.color:'#64748b'}">${cat?cat.name:'—'}</span></td>
-                <td><strong>${fmtNum(p.sold)}</strong> unidades</td>
-                <td>${fmt(p.sellP)}</td>
-                <td><strong>${fmt(rev)}</strong></td>
-                <td><span class="badge ${parseFloat(margin)>=20?'badge-success':'badge-warning'}">${margin}%</span></td>
+                <td data-label="Rank"><span class="badge badge-primary">${medal} #${i+1}</span></td>
+                <td data-label="Producto"><div class="product-cell">${prodIcon(p.catId)}<span style="font-weight:600">${p.name}</span></div></td>
+                <td data-label="Categoría"><span class="badge" style="background:${cat?cat.bg:'#f1f5f9'};color:${cat?cat.color:'#64748b'}">${cat?cat.name:'—'}</span></td>
+                <td data-label="Unidades"><strong>${fmtNum(p.sold)}</strong> uds</td>
+                <td data-label="P. Venta">${fmt(p.sellP)}</td>
+                <td data-label="Ingresos"><strong>${fmt(rev)}</strong></td>
+                <td data-label="Margen"><span class="badge ${parseFloat(margin)>=20?'badge-success':'badge-warning'}">${margin}%</span></td>
               </tr>`;
             }).join('')}
           </tbody>
@@ -236,7 +236,7 @@ const ReportsModule = {
     <div class="card">
       <div class="card-header"><div class="card-title"><i class="fas fa-list"></i> Resumen de Inventario por Categoría</div></div>
       <div class="table-wrap">
-        <table class="tbl-rpt-categories">
+        <table class="tbl-rpt-categories mobile-cards">
           <thead><tr><th>Categoría</th><th>Productos</th><th>Stock Total</th><th>Valor Compra</th><th>Valor Venta</th><th>Ganancia Potencial</th></tr></thead>
           <tbody>
             ${DB.categories.map(cat=>{
@@ -246,12 +246,12 @@ const ReportsModule = {
               const valV=prods.reduce((s,p)=>s+p.stock*p.sellP,0);
               const ganancia=valV-valC;
               return `<tr>
-                <td><span class="badge" style="background:${cat.bg};color:${cat.color}"><i class="fas ${cat.icon}"></i>${cat.name}</span></td>
-                <td>${prods.length}</td>
-                <td><strong>${fmtNum(stock)}</strong> uds</td>
-                <td>${fmt(valC)}</td>
-                <td>${fmt(valV)}</td>
-                <td><span class="badge badge-success">+${fmt(ganancia)}</span></td>
+                <td data-label="Categoría"><span class="badge" style="background:${cat.bg};color:${cat.color}"><i class="fas ${cat.icon}"></i>${cat.name}</span></td>
+                <td data-label="Productos">${prods.length}</td>
+                <td data-label="Stock Total"><strong>${fmtNum(stock)}</strong> uds</td>
+                <td data-label="Valor Compra">${fmt(valC)}</td>
+                <td data-label="Valor Venta">${fmt(valV)}</td>
+                <td data-label="Ganancia Potencial"><span class="badge badge-success">+${fmt(ganancia)}</span></td>
               </tr>`;
             }).join('')}
           </tbody>
@@ -370,7 +370,7 @@ const ReportsModule = {
     <div class="card">
       <div class="card-header"><div class="card-title"><i class="fas fa-table"></i> Detalle por Cajero</div></div>
       <div class="table-wrap">
-        <table class="tbl-rpt-workers">
+        <table class="tbl-rpt-workers mobile-cards">
           <thead><tr><th>Cajero</th><th>Ventas</th><th>Total</th><th>Ticket Promedio</th><th>Efectivo</th><th>Tarjeta</th><th>Transferencia</th></tr></thead>
           <tbody>
             ${DB.workers.map(w=>{
@@ -382,13 +382,13 @@ const ReportsModule = {
               const ta=salesTotal(sales.filter(s=>s.method==='tarjeta'));
               const tr=salesTotal(sales.filter(s=>s.method==='transferencia'));
               return `<tr>
-                <td><div class="person-info"><div class="person-avatar" style="background:#3b82f6">${w.avatar}</div><div><div class="person-name">${w.name}</div><div class="person-sub">${w.role}</div></div></div></td>
-                <td><span class="badge badge-primary">${sales.length}</span></td>
-                <td><strong>${fmt(total)}</strong></td>
-                <td>${fmt(avg)}</td>
-                <td>${fmt(ef)}</td>
-                <td>${fmt(ta)}</td>
-                <td>${fmt(tr)}</td>
+                <td data-label="Cajero"><div class="person-info"><div class="person-avatar" style="background:#3b82f6">${w.avatar}</div><div><div class="person-name">${w.name}</div><div class="person-sub">${w.role}</div></div></div></td>
+                <td data-label="Ventas"><span class="badge badge-primary">${sales.length}</span></td>
+                <td data-label="Total"><strong>${fmt(total)}</strong></td>
+                <td data-label="Ticket Promedio">${fmt(avg)}</td>
+                <td data-label="Efectivo">${fmt(ef)}</td>
+                <td data-label="Tarjeta">${fmt(ta)}</td>
+                <td data-label="Transferencia">${fmt(tr)}</td>
               </tr>`;
             }).join('')}
           </tbody>

@@ -55,7 +55,7 @@ const ProductsModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-products">
+        <table class="tbl-products mobile-cards">
           <thead>
             <tr>
               <th>Código</th><th>Producto</th><th>Categoría</th>
@@ -108,8 +108,8 @@ const ProductsModule = {
       const margin = (((p.sellP - p.buyP) / p.buyP) * 100).toFixed(1);
       return `
       <tr>
-        <td><span class="badge badge-gray">${p.code}</span></td>
-        <td>
+        <td data-label="Código"><span class="badge badge-gray">${p.code}</span></td>
+        <td data-label="Producto">
           <div class="product-cell">
             ${p.image
               ? `<div class="prod-icon" style="overflow:hidden;padding:0"><img src="${p.image}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-sm)" /></div>`
@@ -120,14 +120,14 @@ const ProductsModule = {
             </div>
           </div>
         </td>
-        <td><span class="badge" style="background:${cat?cat.bg:'#f1f5f9'};color:${cat?cat.color:'#64748b'}"><i class="fas ${cat?cat.icon:'fa-box'}"></i>${cat?cat.name:'—'}</span></td>
-        <td>${fmt(p.buyP)}</td>
-        <td><strong>${fmt(p.sellP)}</strong></td>
-        <td><span class="badge ${parseFloat(margin)>=20?'badge-success':'badge-warning'}">${margin}%</span></td>
-        <td>${stockBadge(p.stock, p.minStock)}</td>
-        <td style="font-size:12px">${sup?sup.name:'—'}</td>
-        <td>${statusBadge(p.status)}</td>
-        <td>
+        <td data-label="Categoría"><span class="badge" style="background:${cat?cat.bg:'#f1f5f9'};color:${cat?cat.color:'#64748b'}"><i class="fas ${cat?cat.icon:'fa-box'}"></i>${cat?cat.name:'—'}</span></td>
+        <td data-label="P. Compra">${fmt(p.buyP)}</td>
+        <td data-label="P. Venta"><strong>${fmt(p.sellP)}</strong></td>
+        <td data-label="Margen"><span class="badge ${parseFloat(margin)>=20?'badge-success':'badge-warning'}">${margin}%</span></td>
+        <td data-label="Stock">${stockBadge(p.stock, p.minStock)}</td>
+        <td data-label="Proveedor" style="font-size:12px">${sup?sup.name:'—'}</td>
+        <td data-label="Estado">${statusBadge(p.status)}</td>
+        <td data-label="Acciones">
           <div class="d-flex gap-8">
             <button class="btn btn-sm btn-secondary btn-icon" onclick="ProductsModule.openForm('${p.id}')" title="Editar"><i class="fas fa-pen"></i></button>
             <button class="btn btn-sm btn-outline-danger btn-icon" onclick="ProductsModule.deleteProduct('${p.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>

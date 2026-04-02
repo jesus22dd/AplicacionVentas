@@ -53,12 +53,12 @@ const PendientesModule = {
     const historyRows = history.slice().reverse().map(h => {
       const s2 = +(h.grossIncome - h.totalFixed).toFixed(2);
       return `<tr>
-        <td><strong>${h.label}</strong></td>
-        <td>${sym} ${h.grossIncome.toFixed(2)}</td>
-        <td>${sym} ${h.totalFixed.toFixed(2)}</td>
-        <td><strong style="color:${s2>=0?'var(--success)':'var(--danger)'}">${sym} ${s2.toFixed(2)}</strong></td>
-        <td>${h.closedAt ? fmtDate(h.closedAt) : '—'}</td>
-        <td>${h.notes ? `<span title="${h.notes}" style="cursor:help"><i class="fas fa-comment-dots"></i></span>` : '—'}</td>
+        <td data-label="Período"><strong>${h.label}</strong></td>
+        <td data-label="Ingreso">${sym} ${h.grossIncome.toFixed(2)}</td>
+        <td data-label="Fijos">${sym} ${h.totalFixed.toFixed(2)}</td>
+        <td data-label="Sobrante"><strong style="color:${s2>=0?'var(--success)':'var(--danger)'}">${sym} ${s2.toFixed(2)}</strong></td>
+        <td data-label="Cerrado">${h.closedAt ? fmtDate(h.closedAt) : '—'}</td>
+        <td data-label="Notas">${h.notes ? `<span title="${h.notes}" style="cursor:help"><i class="fas fa-comment-dots"></i></span>` : '—'}</td>
       </tr>`;
     }).join('');
 
@@ -135,7 +135,7 @@ const PendientesModule = {
       </div>
       <div class="card-body">
         ${!history.length ? `<div class="empty-state"><i class="fas fa-history"></i><h4>Sin historial</h4><p>Los períodos cerrados aparecerán aquí</p></div>` :
-        `<div class="table-responsive"><table class="table tbl-pendientes">
+        `<div class="table-responsive"><table class="table tbl-pendientes mobile-cards">
           <thead><tr><th>Período</th><th>Ingreso</th><th>Fijos</th><th>Sobrante</th><th>Cerrado</th><th>Notas</th></tr></thead>
           <tbody>${historyRows}</tbody>
         </table></div>`}

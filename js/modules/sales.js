@@ -84,7 +84,7 @@ const SalesModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-sales">
+        <table class="tbl-sales mobile-cards">
           <thead>
             <tr><th>#</th><th>Fecha/Hora</th><th>Cliente</th><th>Cajero</th><th>Ítems</th><th>Subtotal</th><th>Descuento</th><th>Total</th><th>Método</th><th>Acción</th></tr>
           </thead>
@@ -142,18 +142,18 @@ const SalesModule = {
         : `<span style="font-size:12px">${s.workName}</span>`;
       return `
       <tr>
-        <td><span class="badge badge-primary">${s.id}</span></td>
-        <td style="white-space:nowrap;font-size:12px">${fmtDatetime(s.date)}</td>
-        <td>
+        <td data-label="#"><span class="badge badge-primary">${s.id}</span></td>
+        <td data-label="Fecha" style="white-space:nowrap;font-size:12px">${fmtDatetime(s.date)}</td>
+        <td data-label="Cliente">
           <div style="font-size:13px;font-weight:600">${s.custName}</div>
         </td>
-        <td>${workerCell}</td>
-        <td><span class="badge badge-gray">${s.items.length} ítem${s.items.length!==1?'s':''}</span></td>
-        <td>${fmt(s.subtotal)}</td>
-        <td>${discAmt>0?`<span style="color:var(--danger)">-${fmt(discAmt)} (${s.discount}%)</span>`:'—'}</td>
-        <td><strong style="font-size:14px">${fmt(s.total)}</strong></td>
-        <td>${payBadge(s.method)}</td>
-        <td>
+        <td data-label="Cajero">${workerCell}</td>
+        <td data-label="Ítems"><span class="badge badge-gray">${s.items.length} ítem${s.items.length!==1?'s':''}</span></td>
+        <td data-label="Subtotal">${fmt(s.subtotal)}</td>
+        <td data-label="Descuento">${discAmt>0?`<span style="color:var(--danger)">-${fmt(discAmt)} (${s.discount}%)</span>`:'—'}</td>
+        <td data-label="Total"><strong style="font-size:14px">${fmt(s.total)}</strong></td>
+        <td data-label="Método">${payBadge(s.method)}</td>
+        <td data-label="Acción">
           <div class="d-flex gap-8">
             <button class="btn btn-sm btn-secondary btn-icon" onclick="SalesModule.showDetail('${s.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
             <button class="btn btn-sm btn-outline-primary btn-icon" onclick="SalesModule.printSale('${s.id}')" title="Imprimir"><i class="fas fa-print"></i></button>

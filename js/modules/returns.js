@@ -58,7 +58,7 @@ const ReturnsModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-returns">
+        <table class="tbl-returns mobile-cards">
           <thead>
             <tr><th>ID</th><th>Fecha</th><th>Venta Orig.</th><th>Cliente</th><th>Cajero</th><th>Ítems</th><th>Total</th><th>Reembolso</th><th>Reingresar</th><th>Estado</th><th>Acción</th></tr>
           </thead>
@@ -106,21 +106,21 @@ const ReturnsModule = {
 
     tbody.innerHTML = pag.items.map(r => `
     <tr>
-      <td><span class="badge badge-danger">${r.id}</span></td>
-      <td style="font-size:12px">${fmtDatetime(r.date)}</td>
-      <td><span class="badge badge-primary">${r.saleId}</span></td>
-      <td style="font-size:13px;font-weight:600">${r.custName}</td>
-      <td style="font-size:12px">${r.workName}</td>
-      <td><span class="badge badge-gray">${r.items.length} ítem${r.items.length!==1?'s':''}</span></td>
-      <td><strong style="color:var(--danger)">${fmt(r.total)}</strong></td>
-      <td>${payBadge(r.refundMethod)}</td>
-      <td>${r.restock
+      <td data-label="ID"><span class="badge badge-danger">${r.id}</span></td>
+      <td data-label="Fecha" style="font-size:12px">${fmtDatetime(r.date)}</td>
+      <td data-label="Venta Orig."><span class="badge badge-primary">${r.saleId}</span></td>
+      <td data-label="Cliente" style="font-size:13px;font-weight:600">${r.custName}</td>
+      <td data-label="Cajero" style="font-size:12px">${r.workName}</td>
+      <td data-label="Ítems"><span class="badge badge-gray">${r.items.length} ítem${r.items.length!==1?'s':''}</span></td>
+      <td data-label="Total"><strong style="color:var(--danger)">${fmt(r.total)}</strong></td>
+      <td data-label="Reembolso">${payBadge(r.refundMethod)}</td>
+      <td data-label="Reingresar">${r.restock
         ? `<span class="badge badge-success"><i class="fas fa-circle-check"></i>Sí</span>`
         : `<span class="badge badge-gray"><i class="fas fa-circle-xmark"></i>No</span>`}</td>
-      <td>${r.status === 'processed'
+      <td data-label="Estado">${r.status === 'processed'
         ? `<span class="badge badge-success"><i class="fas fa-circle-check"></i>Procesada</span>`
         : `<span class="badge badge-warning"><i class="fas fa-clock"></i>Pendiente</span>`}</td>
-      <td>
+      <td data-label="Acción">
         <button class="btn btn-sm btn-secondary btn-icon" onclick="ReturnsModule.viewDetail('${r.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
       </td>
     </tr>`).join('');

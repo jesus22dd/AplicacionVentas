@@ -60,7 +60,7 @@ const PurchasesModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-purchases">
+        <table class="tbl-purchases mobile-cards">
           <thead>
             <tr><th>ID</th><th>Fecha</th><th>Proveedor</th><th>Responsable</th><th>Ítems</th><th>Total</th><th>Fecha Esperada</th><th>Estado</th><th>Acciones</th></tr>
           </thead>
@@ -111,17 +111,17 @@ const PurchasesModule = {
       const [cls, icon, label] = statusInfo[p.status] || ['badge-gray','fa-question','Otro'];
       return `
       <tr>
-        <td><span class="badge badge-primary">${p.id}</span></td>
-        <td style="font-size:12px">${fmtDate(p.date)}</td>
-        <td>
+        <td data-label="ID"><span class="badge badge-primary">${p.id}</span></td>
+        <td data-label="Fecha" style="font-size:12px">${fmtDate(p.date)}</td>
+        <td data-label="Proveedor">
           <div style="font-size:13px;font-weight:600">${p.supName}</div>
         </td>
-        <td style="font-size:12px">${p.workName}</td>
-        <td><span class="badge badge-gray">${p.items.length} ítem${p.items.length!==1?'s':''}</span></td>
-        <td><strong>${fmt(p.total)}</strong></td>
-        <td style="font-size:12px">${fmtDate(p.expectedDate)}</td>
-        <td><span class="badge ${cls}"><i class="fas ${icon}"></i>${label}</span></td>
-        <td>
+        <td data-label="Responsable" style="font-size:12px">${p.workName}</td>
+        <td data-label="Ítems"><span class="badge badge-gray">${p.items.length} ítem${p.items.length!==1?'s':''}</span></td>
+        <td data-label="Total"><strong>${fmt(p.total)}</strong></td>
+        <td data-label="F. Esperada" style="font-size:12px">${fmtDate(p.expectedDate)}</td>
+        <td data-label="Estado"><span class="badge ${cls}"><i class="fas ${icon}"></i>${label}</span></td>
+        <td data-label="Acciones">
           <div class="d-flex gap-8">
             <button class="btn btn-sm btn-secondary btn-icon" onclick="PurchasesModule.viewDetail('${p.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
             ${p.status !== 'received' ? `<button class="btn btn-sm btn-outline-primary btn-icon" onclick="PurchasesModule.markReceived('${p.id}')" title="Marcar recibida"><i class="fas fa-circle-check"></i></button>` : ''}

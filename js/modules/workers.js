@@ -52,7 +52,7 @@ const WorkersModule = {
         </div>
       </div>
       <div class="table-wrap">
-        <table class="tbl-workers">
+        <table class="tbl-workers mobile-cards">
           <thead>
             <tr><th>Trabajador</th><th>Cargo</th><th>Email</th><th>Teléfono</th><th>Fecha Ingreso</th><th>Salario</th><th>Estado</th><th>Acciones</th></tr>
           </thead>
@@ -90,10 +90,9 @@ const WorkersModule = {
     const colors = ['#3b82f6','#ef4444','#10b981','#f59e0b','#8b5cf6','#06b6d4','#f97316','#ec4899','#84cc16','#a855f7'];
     tbody.innerHTML = items.map((w,i) => {
       const color = colors[i % colors.length];
-      const saleStat = w.sales > 0 ? `<span class="badge badge-primary">${w.sales} ventas</span>` : `<span class="badge badge-gray">—</span>`;
       return `
       <tr>
-        <td>
+        <td data-label="Trabajador">
           <div class="person-info">
             <div class="person-avatar" style="background:${color}">${w.avatar}</div>
             <div>
@@ -102,13 +101,13 @@ const WorkersModule = {
             </div>
           </div>
         </td>
-        <td><span class="badge badge-purple"><i class="fas fa-briefcase"></i>${w.role}</span></td>
-        <td style="font-size:12px">${w.email}</td>
-        <td style="font-size:12px">${w.phone}</td>
-        <td style="font-size:12px">${fmtDate(w.hireDate)}</td>
-        <td><strong>${fmt(w.salary)}</strong><span style="font-size:10px;color:var(--text-3)">/mes</span></td>
-        <td>${statusBadge(w.status)}</td>
-        <td>
+        <td data-label="Cargo"><span class="badge badge-purple"><i class="fas fa-briefcase"></i>${w.role}</span></td>
+        <td data-label="Email" style="font-size:12px">${w.email}</td>
+        <td data-label="Teléfono" style="font-size:12px">${w.phone}</td>
+        <td data-label="Ingreso" style="font-size:12px">${fmtDate(w.hireDate)}</td>
+        <td data-label="Salario"><strong>${fmt(w.salary)}</strong><span style="font-size:10px;color:var(--text-3)">/mes</span></td>
+        <td data-label="Estado">${statusBadge(w.status)}</td>
+        <td data-label="Acciones">
           <div class="d-flex gap-8">
             <button class="btn btn-sm btn-secondary btn-icon" onclick="WorkersModule.viewDetail('${w.id}')" title="Ver detalle"><i class="fas fa-eye"></i></button>
             <button class="btn btn-sm btn-secondary btn-icon" onclick="WorkersModule.openForm('${w.id}')" title="Editar"><i class="fas fa-pen"></i></button>

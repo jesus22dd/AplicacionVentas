@@ -103,20 +103,20 @@ const QuotationsModule = {
       const [cls, lbl] = sMap[q.status] || ['badge-gray','?'];
       const worker = DB.workers.find(w => w.id === q.createdBy);
       return `<tr>
-        <td><strong>${q.id}</strong><br/><span style="font-size:11px;color:var(--text-3)">${q.number||''}</span></td>
-        <td>
+        <td data-label="ID"><strong>${q.id}</strong><br/><span style="font-size:11px;color:var(--text-3)">${q.number||''}</span></td>
+        <td data-label="Cliente">
           <div style="font-weight:600">${q.clientData.name}</div>
           <div style="font-size:11px;color:var(--text-3)">${q.clientData.phone||'—'}</div>
         </td>
-        <td>${fmtDate(q.createdAt)}</td>
-        <td>${fmtDate(q.validUntil)}</td>
-        <td>${q.items.length} artículos</td>
-        <td>
+        <td data-label="Fecha">${fmtDate(q.createdAt)}</td>
+        <td data-label="Válido hasta">${fmtDate(q.validUntil)}</td>
+        <td data-label="Items">${q.items.length} artículos</td>
+        <td data-label="Total">
           <div style="font-weight:700">${DB.config.currencySymbol||'Bs.'} ${q.totalBs.toFixed(2)}</div>
           <div style="font-size:11px;color:var(--text-3)">$${q.total.toFixed(2)} USD</div>
         </td>
-        <td><span class="badge ${cls}">${lbl}</span></td>
-        <td>
+        <td data-label="Estado"><span class="badge ${cls}">${lbl}</span></td>
+        <td data-label="Acciones">
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             <button class="btn btn-sm btn-secondary" title="Ver" onclick="QuotationsModule.viewDetails('${q.id}')"><i class="fas fa-eye"></i></button>
             <button class="btn btn-sm btn-primary" title="PDF" onclick="QuotationsModule.generatePDF('${q.id}')"><i class="fas fa-file-pdf"></i></button>
@@ -130,7 +130,7 @@ const QuotationsModule = {
       </tr>`;
     }).join('');
 
-    return `<div class="table-responsive"><table class="table tbl-quotations">
+    return `<div class="table-responsive"><table class="table tbl-quotations mobile-cards">
       <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Válido hasta</th><th>Items</th><th>Total</th><th>Estado</th><th>Acciones</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>

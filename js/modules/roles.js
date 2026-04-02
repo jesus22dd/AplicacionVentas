@@ -30,7 +30,7 @@ const RolesModule = {
       const workerCount = DB.workers.filter(w => w.roleId === role.id).length;
       const totalPerms  = Object.values(role.permissions).reduce((s, p) => s + Object.values(p).filter(v=>v).length, 0);
       return `<tr>
-        <td>
+        <td data-label="Rol">
           <div style="display:flex;align-items:center;gap:10px">
             <div style="width:36px;height:36px;border-radius:50%;background:${role.color}20;color:${role.color};
               display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">
@@ -42,13 +42,13 @@ const RolesModule = {
             </div>
           </div>
         </td>
-        <td><span class="badge badge-primary">${role.id}</span></td>
-        <td>${workerCount} ${workerCount===1?'trabajador':'trabajadores'}</td>
-        <td>${totalPerms} permisos activos</td>
-        <td>
+        <td data-label="ID"><span class="badge badge-primary">${role.id}</span></td>
+        <td data-label="Asignados">${workerCount} ${workerCount===1?'trabajador':'trabajadores'}</td>
+        <td data-label="Permisos">${totalPerms} permisos activos</td>
+        <td data-label="Tipo">
           ${role.isSystem?`<span class="badge badge-gray">Sistema</span>`:'<span class="badge badge-success">Personalizado</span>'}
         </td>
-        <td>
+        <td data-label="Acciones">
           <div style="display:flex;gap:4px">
             <button class="btn btn-sm btn-secondary" onclick="RolesModule.viewRole('${role.id}')" title="Ver permisos"><i class="fas fa-eye"></i></button>
             <button class="btn btn-sm btn-primary" onclick="RolesModule.showForm('${role.id}')" title="Editar"><i class="fas fa-pen"></i></button>
@@ -77,7 +77,7 @@ const RolesModule = {
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table tbl-roles">
+          <table class="table tbl-roles mobile-cards">
             <thead>
               <tr><th>Rol</th><th>ID</th><th>Asignados</th><th>Permisos</th><th>Tipo</th><th>Acciones</th></tr>
             </thead>

@@ -208,16 +208,17 @@ const POSModule = {
     const tabCart = document.getElementById('mtabCart');
     if (!left || !right) return;
     if (tab === 'catalog') {
-      left.style.display  = '';
+      left.style.display  = 'flex';
       right.style.display = 'none';
       tabCat?.classList.add('active');
       tabCart?.classList.remove('active');
     } else {
       left.style.display  = 'none';
-      right.style.display = '';
+      right.style.display = 'flex';
       tabCat?.classList.remove('active');
       tabCart?.classList.add('active');
-      document.getElementById('posCartFab').style.display = 'none';
+      const fab = document.getElementById('posCartFab');
+      if (fab) fab.style.display = 'none';
     }
   },
 
