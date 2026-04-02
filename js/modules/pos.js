@@ -10,6 +10,7 @@ const POSModule = {
   paymentMethod: 'efectivo',
   discountPct: 0,
   lastSale: null,
+  sortDesc: false,
 
   render() {
     return `
@@ -19,6 +20,9 @@ const POSModule = {
         <p>Registra ventas rápidamente</p>
       </div>
       <div class="d-flex gap-8">
+        <button class="btn btn-sm pos-currency-btn" id="currencyToggleBtn" onclick="POSModule.toggleCurrency()" title="Cambiar visualización de moneda">
+          <i class="fas fa-exchange-alt"></i> <span id="currencyLabel">${DB.config.displayCurrency||'Bs.'}</span>
+        </button>
         <button class="btn btn-secondary" onclick="navigate('sales')"><i class="fas fa-history"></i> Historial</button>
       </div>
     </div>
@@ -38,10 +42,13 @@ const POSModule = {
       <!-- LEFT: Product Catalog -->
       <div class="pos-left">
         <div class="pos-search-bar">
-          <i class="fas fa-magnifying-glass" style="color:var(--text-3)"></i>
+          <i class="fas fa-magnifying-glass pos-search-icon"></i>
           <input type="text" class="pos-search-input" id="posSearch"
-            placeholder="Buscar producto o código de barras..." oninput="POSModule.onSearch(this.value)" />
-          <button class="btn btn-sm btn-secondary" onclick="POSModule.clearSearch()"><i class="fas fa-xmark"></i></button>
+            placeholder="Buscar producto..." oninput="POSModule.onSearch(this.value)" />
+          <button class="btn btn-sm pos-sort-btn" id="posSortBtn" onclick="POSModule.toggleSort()" title="Más antiguos primero">
+            <i class="fas fa-arrow-down-wide-short"></i>
+          </button>
+          <button class="btn btn-sm pos-clear-btn" onclick="POSModule.clearSearch()" title="Limpiar búsqueda"><i class="fas fa-xmark"></i></button>
         </div>
         <div class="pos-cat-tabs" id="posCatTabs">
           <button class="pos-cat-tab active" onclick="POSModule.filterCat('all',this)">
@@ -88,10 +95,10 @@ const POSModule = {
 
           <!-- Totals -->
           <div class="cart-totals">
-            <div class="cart-total-row"><span>Subtotal:</span><span id="cartSubtotal">$0.00</span></div>
-            <div class="cart-total-row" style="color:var(--danger)"><span>Descuento:</span><span id="cartDiscount">-$0.00</span></div>
-            <div class="cart-total-row"><span>IVA (${DB.config.iva}%):</span><span id="cartTax">$0.00</span></div>
-            <div class="cart-total-row total"><span>TOTAL:</span><span id="cartTotal">$0.00</span></div>
+            <div class="cart-total-row"><span>Subtotal:</span><span id="cartSubtotal">${fmt(0)}</span></div>
+            <div class="cart-total-row" style="color:var(--danger)"><span>Descuento:</span><span id="cartDiscount">-${fmt(0)}</span></div>
+            <div class="cart-total-row"><span>IVA (${DB.config.iva}%):</span><span id="cartTax">${fmt(0)}</span></div>
+            <div class="cart-total-row total"><span>TOTAL:</span><span id="cartTotal">${fmt(0)}</span></div>
           </div>
 
           <button class="btn btn-success w-100 btn-lg" onclick="POSModule.checkout()">
@@ -127,6 +134,7 @@ const POSModule = {
       const term = this.searchTerm.toLowerCase();
       prods = prods.filter(p => p.name.toLowerCase().includes(term) || p.code.toLowerCase().includes(term));
     }
+    if (this.sortDesc) prods = prods.slice().reverse();
     if (prods.length === 0) {
       return `<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-search"></i><h4>Sin resultados</h4><p>Intenta con otro término</p></div>`;
     }
@@ -164,6 +172,36 @@ const POSModule = {
     document.getElementById('posSearch').value = '';
     this.searchTerm = '';
     document.getElementById('posProductGrid').innerHTML = this._renderProducts();
+  },
+
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    const btn = document.getElementById('posSortBtn');
+    if (btn) {
+      btn.querySelector('i').className = this.sortDesc ? 'fas fa-arrow-up-wide-short' : 'fas fa-arrow-down-wide-short';
+      btn.title = this.sortDesc ? 'Más recientes primero (activo)' : 'Más antiguos primero';
+      btn.classList.toggle('active', this.sortDesc);
+    }
+    document.getElementById('posProductGrid').innerHTML = this._renderProducts();
+  },
+
+  toggleCurrency() {
+    const cfg = DB.config;
+    if (cfg.displayCurrency === 'USD') {
+      cfg.displayCurrency = 'Bs.';
+      cfg.currencySymbol  = 'Bs.';
+    } else {
+      cfg.displayCurrency = 'USD';
+      cfg.currencySymbol  = '$';
+    }
+    saveDBConfig();
+    this.updateTotals();
+    document.getElementById('posProductGrid').innerHTML = this._renderProducts();
+    const lbl = document.getElementById('currencyLabel');
+    if (lbl) lbl.textContent = cfg.displayCurrency;
+    const btn = document.getElementById('currencyToggleBtn');
+    if (btn) btn.classList.toggle('active', cfg.displayCurrency === 'USD');
+    showToast(`Precios en ${cfg.displayCurrency === 'USD' ? 'Dólares (USD)' : 'Bolivianos (Bs.)'}`, 'info');
   },
 
   addToCart(prodId) {
@@ -272,10 +310,10 @@ const POSModule = {
     const itemsEl = document.getElementById('cartItems');
     if (this.cart.length === 0) {
       itemsEl.innerHTML = `<div class="cart-empty" id="cartEmpty"><i class="fas fa-shopping-cart"></i><p>Carrito vacío</p><span style="font-size:12px;color:var(--text-3)">Selecciona productos del catálogo</span></div>`;
-      document.getElementById('cartSubtotal').textContent = '$0.00';
-      document.getElementById('cartDiscount').textContent = '-$0.00';
-      document.getElementById('cartTax').textContent = '$0.00';
-      document.getElementById('cartTotal').textContent = '$0.00';
+      document.getElementById('cartSubtotal').textContent = fmt(0);
+      document.getElementById('cartDiscount').textContent = '-' + fmt(0);
+      document.getElementById('cartTax').textContent = fmt(0);
+      document.getElementById('cartTotal').textContent = fmt(0);
       return;
     }
 
@@ -426,13 +464,13 @@ const POSModule = {
         <div id="chkCashSection">
           <div style="display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:var(--radius-sm);padding:10px 14px">
             <div style="flex:1">
-              <label style="font-size:12px;color:var(--text-2);font-weight:600">Monto recibido ($)</label>
+              <label style="font-size:12px;color:var(--text-2);font-weight:600">Monto recibido (USD)</label>
               <input class="form-control" type="number" name="cashReceived" id="chkCash" min="${total}" step="0.50"
                 placeholder="${fmt(total)}" oninput="POSModule._calcCashChange()" style="margin-top:4px" />
             </div>
             <div style="text-align:right">
               <div style="font-size:11px;color:var(--text-3);font-weight:600">CAMBIO</div>
-              <div style="font-size:20px;font-weight:800;color:var(--secondary)" id="chkChange">$0.00</div>
+              <div style="font-size:20px;font-weight:800;color:var(--secondary)" id="chkChange">${fmt(0)}</div>
             </div>
           </div>
         </div>
@@ -441,8 +479,12 @@ const POSModule = {
 
       <div class="modal-footer" style="padding-top:0">
         <button type="button" class="btn btn-secondary" onclick="closeModalDirect()"><i class="fas fa-xmark"></i> Cancelar</button>
-        <button type="submit" class="btn btn-success" style="min-width:160px">
-          <i class="fas fa-check-circle"></i> Confirmar Venta — ${fmt(total)}
+        <button type="submit" class="btn btn-success btn-checkout-confirm">
+          <i class="fas fa-check-circle" style="font-size:16px;flex-shrink:0"></i>
+          <span class="checkout-btn-text">
+            <span class="checkout-btn-label">Confirmar Venta</span>
+            <span class="checkout-btn-total">${fmt(total)}</span>
+          </span>
         </button>
       </div>
     </form>`, 'modal-lg');

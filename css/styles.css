@@ -565,6 +565,19 @@ tbody tr:last-child td { border-bottom: none; }
 .btn-icon { padding: 8px; width: 34px; height: 34px; justify-content: center; }
 .btn-icon.btn-sm { width: 28px; height: 28px; padding: 5px; }
 
+/* Checkout confirm button — two-line layout to avoid overflow on mobile */
+.btn-checkout-confirm {
+  white-space: normal;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 180px;
+  padding: 10px 20px;
+}
+.checkout-btn-text { display: flex; flex-direction: column; gap: 1px; line-height: 1.2; }
+.checkout-btn-label { font-size: 13px; font-weight: 700; }
+.checkout-btn-total { font-size: 16px; font-weight: 800; }
+
 .btn-primary { background: var(--primary); color: #fff; }
 .btn-primary:hover { background: var(--primary-d); box-shadow: 0 4px 12px rgba(59,130,246,.35); }
 .btn-secondary { background: var(--bg); color: var(--text-2); border: 1px solid var(--border); }
@@ -816,6 +829,33 @@ select.form-control { cursor: pointer; }
   transition: border-color var(--transition);
 }
 .pos-search-input:focus { border-color: var(--primary); }
+.pos-search-icon { color: var(--text-3); font-size: 14px; flex-shrink: 0; }
+
+/* Sort toggle button in POS search bar */
+.pos-sort-btn, .pos-clear-btn {
+  flex-shrink: 0;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  color: var(--text-2);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  transition: all var(--transition);
+}
+.pos-sort-btn:hover, .pos-clear-btn:hover { border-color: var(--primary); color: var(--primary); }
+.pos-sort-btn.active { background: var(--primary-l); border-color: var(--primary); color: var(--primary); }
+
+/* Currency toggle button in POS header */
+.pos-currency-btn {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  color: var(--text-2);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  transition: all var(--transition);
+}
+.pos-currency-btn:hover { border-color: var(--primary); color: var(--primary); }
+.pos-currency-btn.active { background: var(--primary-l); border-color: var(--primary); color: var(--primary); }
 
 .pos-cat-tabs {
   padding: 10px 16px;
@@ -1019,6 +1059,8 @@ select.form-control { cursor: pointer; }
   font-size: 13px; font-weight: 500;
   animation: toastIn .3s ease;
   cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
 }
 .toast i { font-size: 16px; }
 .toast.success { border-color: var(--secondary); }
@@ -1577,8 +1619,15 @@ select.form-control { cursor: pointer; }
 
   /* Card header — allow wrapping so search/filter don't crush the title */
   .card-header { flex-wrap: wrap; }
-  .card-header .search-box { max-width: 100%; min-width: 0; }
+  .card-header > .d-flex { flex-wrap: wrap; min-width: 0; }
+  .card-header .search-box { max-width: 100%; min-width: 0; flex: 1; }
   .card-header .filter-select { min-width: 0; flex: 1; }
+
+  /* POS search bar — prevent overflow on narrow screens */
+  .pos-search-bar { padding: 10px 12px; gap: 8px; overflow: hidden; }
+  .pos-search-input { min-width: 0; font-size: 13px; }
+  .pos-sort-btn, .pos-clear-btn { padding: 7px 9px; }
+  .pos-currency-btn { padding: 6px 10px; }
 
   /* Forms & utility grids */
   .form-grid-2, .form-grid-3 { grid-template-columns: 1fr !important; }

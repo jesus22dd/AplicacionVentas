@@ -80,7 +80,41 @@ function showToast(msg, type = 'success') {
   t.className = `toast ${type}`;
   t.innerHTML = `<i class="fas ${icons[type]||icons.info}"></i><span>${msg}</span><button class="toast-close" onclick="this.parentElement.remove()"><i class="fas fa-xmark"></i></button>`;
   document.getElementById('toastContainer').appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(100%)'; t.style.transition='.3s'; setTimeout(()=>t.remove(), 320); }, 3500);
+
+  let dismissed = false;
+  function dismiss(dir) {
+    if (dismissed) return;
+    dismissed = true;
+    t.style.transition = 'transform .25s ease, opacity .25s ease';
+    t.style.transform  = `translateX(${dir > 0 ? '120%' : '-120%'})`;
+    t.style.opacity    = '0';
+    setTimeout(() => t.remove(), 270);
+  }
+
+  const autoTimer = setTimeout(() => dismiss(1), 3500);
+
+  // Swipe to dismiss (left or right)
+  let startX = 0, currentX = 0;
+  t.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX; currentX = 0;
+    t.style.transition = 'none';
+  }, { passive: true });
+  t.addEventListener('touchmove', e => {
+    currentX = e.touches[0].clientX - startX;
+    t.style.transform = `translateX(${currentX}px)`;
+    t.style.opacity   = String(Math.max(0, 1 - Math.abs(currentX) / 150));
+  }, { passive: true });
+  t.addEventListener('touchend', () => {
+    if (Math.abs(currentX) > 60) {
+      clearTimeout(autoTimer);
+      dismiss(currentX > 0 ? 1 : -1);
+    } else {
+      t.style.transition = 'transform .2s ease, opacity .2s ease';
+      t.style.transform  = 'translateX(0)';
+      t.style.opacity    = '1';
+    }
+    currentX = 0;
+  });
 }
 
 /* ---- Product icon ---- */
