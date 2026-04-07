@@ -6,6 +6,7 @@ const PurchasesModule = {
   page: 1,
   search: '',
   statusFilter: 'all',
+  sortDesc: true,
 
   render() {
     const total    = DB.purchases.reduce((a,p) => a + p.total, 0);
@@ -51,6 +52,12 @@ const PurchasesModule = {
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Buscar por ID, proveedor..." oninput="PurchasesModule.applySearch(this.value)" />
           </div>
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="PurchasesModule.toggleSort()"
+            title="${this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this.sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
           <select class="filter-select" onchange="PurchasesModule.applyStatus(this.value)">
             <option value="all">Todos los estados</option>
             <option value="pending">Pendiente</option>
@@ -78,13 +85,27 @@ const PurchasesModule = {
     this.renderTable();
   },
 
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    this.page = 1;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this.sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    this.renderTable();
+  },
+
   getFiltered() {
-    let items = [...DB.purchases].reverse();
+    let items = [...DB.purchases];
     if (this.statusFilter !== 'all') items = items.filter(p => p.status === this.statusFilter);
     if (this.search) {
       const t = this.search.toLowerCase();
       items = items.filter(p => p.id.toLowerCase().includes(t) || p.supName.toLowerCase().includes(t) || p.workName.toLowerCase().includes(t));
     }
+    if (this.sortDesc) items.reverse();
     return items;
   },
 

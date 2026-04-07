@@ -7,6 +7,7 @@ const ProductsModule = {
   search: '',
   catFilter: 'all',
   statusFilter: 'all',
+  sortDesc: false,
 
   render() {
     return `
@@ -24,6 +25,12 @@ const ProductsModule = {
       <div class="card-header">
         <div class="card-title"><i class="fas fa-boxes-stacked"></i> Catálogo de Productos</div>
         <div class="d-flex gap-8">
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="ProductsModule.toggleSort()"
+            title="${this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this.sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
           <select class="filter-select" id="prodStatusFilter" onchange="ProductsModule.applyFilter()">
             <option value="all">Todos los estados</option>
             <option value="active">Activos</option>
@@ -78,6 +85,19 @@ const ProductsModule = {
     this.renderTable();
   },
 
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    this.page = 1;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this.sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    this.renderTable();
+  },
+
   getFiltered() {
     let items = [...DB.products];
     if (this.catFilter !== 'all') items = items.filter(p => p.catId === this.catFilter);
@@ -86,6 +106,7 @@ const ProductsModule = {
       const t = this.search.toLowerCase();
       items = items.filter(p => p.name.toLowerCase().includes(t) || p.code.toLowerCase().includes(t));
     }
+    if (this.sortDesc) items.reverse();
     return items;
   },
 

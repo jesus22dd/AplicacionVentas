@@ -411,7 +411,7 @@ const POSModule = {
               oninput="POSModule._searchCustomer(this.value)"
               onblur="setTimeout(()=>{const r=document.getElementById('chkCustResults');if(r)r.style.display='none';},200)"
               autocomplete="off" />
-            <div id="chkCustResults" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);max-height:160px;overflow-y:auto;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,.12)"></div>
+            <div id="chkCustResults" style="position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);max-height:160px;overflow-y:auto;overflow-x:hidden;z-index:9999;display:none;box-shadow:0 4px 12px rgba(0,0,0,.12)"></div>
             <input type="hidden" name="custId" id="chkCustId" value="" />
             <div id="chkCustSelected" style="display:none;margin-top:6px;background:var(--bg);border-radius:var(--radius-sm);padding:8px 12px;font-size:13px;color:var(--text-2)"></div>
           </div>
@@ -540,7 +540,13 @@ const POSModule = {
     document.getElementById('chkCustSearch').value  = c.name;
     document.getElementById('chkCustResults').style.display = 'none';
     const sel = document.getElementById('chkCustSelected');
-    sel.innerHTML = `<i class="fas fa-user-check" style="color:var(--secondary)"></i>&nbsp; <b>${c.name}</b>${c.ruc?' &nbsp;·&nbsp; CI '+c.ruc:''}${c.phone?' &nbsp;·&nbsp; '+c.phone:''}`;
+    sel.innerHTML = `<div style="display:flex;align-items:center;gap:8px">
+      <i class="fas fa-user-check" style="color:var(--secondary);flex-shrink:0"></i>
+      <div>
+        <div style="font-weight:600;color:var(--text)">${c.name}</div>
+        <div style="font-size:11px;color:var(--text-3)">${[c.ruc?'CI: '+c.ruc:'', c.phone||''].filter(Boolean).join(' · ')}</div>
+      </div>
+    </div>`;
     sel.style.display = 'block';
   },
 

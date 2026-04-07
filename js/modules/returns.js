@@ -6,6 +6,7 @@ const ReturnsModule = {
   page: 1,
   search: '',
   statusFilter: 'all',
+  sortDesc: true,
 
   render() {
     const totalReturned = DB.returns.reduce((a,r) => a + r.total, 0);
@@ -50,6 +51,12 @@ const ReturnsModule = {
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Buscar por ID, cliente, venta..." oninput="ReturnsModule.applySearch(this.value)" />
           </div>
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="ReturnsModule.toggleSort()"
+            title="${this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this.sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
           <select class="filter-select" onchange="ReturnsModule.applyStatus(this.value)">
             <option value="all">Todos los estados</option>
             <option value="processed">Procesadas</option>
@@ -76,8 +83,21 @@ const ReturnsModule = {
     this.renderTable();
   },
 
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    this.page = 1;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this.sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    this.renderTable();
+  },
+
   getFiltered() {
-    let items = [...DB.returns].reverse();
+    let items = [...DB.returns];
     if (this.statusFilter !== 'all') items = items.filter(r => r.status === this.statusFilter);
     if (this.search) {
       const t = this.search.toLowerCase();
@@ -88,6 +108,7 @@ const ReturnsModule = {
         r.workName.toLowerCase().includes(t)
       );
     }
+    if (this.sortDesc) items.reverse();
     return items;
   },
 

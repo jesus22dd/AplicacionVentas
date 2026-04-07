@@ -7,6 +7,7 @@ const InventoryModule = {
   search: '',
   tab: 'stock',
   catFilter: 'all',
+  sortDesc: false,
 
   render() {
     const lowStock = getLowStockItems();
@@ -112,6 +113,19 @@ const InventoryModule = {
     else el.innerHTML = this.renderMovementsTab();
   },
 
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    this.page = 1;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this.sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    this.renderTabContent();
+  },
+
   renderStockTab() {
     let items = [...DB.products];
     if (this.catFilter !== 'all') items = items.filter(p => p.catId === this.catFilter);
@@ -119,14 +133,23 @@ const InventoryModule = {
       const t = this.search.toLowerCase();
       items = items.filter(p => p.name.toLowerCase().includes(t) || p.code.toLowerCase().includes(t));
     }
+    if (this.sortDesc) items.reverse();
     const pag = paginate(items, this.page, 12);
     return `
     <div class="card">
       <div class="card-header">
         <div class="card-title"><i class="fas fa-list"></i> Lista de Inventario</div>
-        <div class="search-box" style="max-width:280px">
-          <i class="fas fa-search"></i>
-          <input type="text" value="${this.search}" placeholder="Buscar producto..." oninput="InventoryModule.searchStock(this.value)" />
+        <div class="d-flex gap-8">
+          <div class="search-box" style="max-width:280px">
+            <i class="fas fa-search"></i>
+            <input type="text" value="${this.search}" placeholder="Buscar producto..." oninput="InventoryModule.searchStock(this.value)" />
+          </div>
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="InventoryModule.toggleSort()"
+            title="${this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this.sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
         </div>
       </div>
       <div class="card-body" style="padding:12px 20px 4px">

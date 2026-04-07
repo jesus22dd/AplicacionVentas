@@ -6,6 +6,7 @@ const QuotationsModule = {
   _page: 1,
   _filter: 'all',
   _search: '',
+  _sortDesc: true,
   _qfItems: [],
   _qfClient: null,
   _editId: null,
@@ -42,9 +43,15 @@ const QuotationsModule = {
     <div class="card">
       <div class="card-header">
         <div class="card-title"><i class="fas fa-file-invoice"></i> Lista de Cotizaciones</div>
-        <div>
-          <input class="form-control" style="width:220px" placeholder="Buscar cliente o ID..."
+        <div class="d-flex gap-8">
+          <input class="form-control" style="width:220px;min-width:0" placeholder="Buscar cliente o ID..."
             value="${this._search}" oninput="QuotationsModule._liveSearch(this.value)" />
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="QuotationsModule.toggleSort()"
+            title="${this._sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this._sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this._sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
         </div>
       </div>
       <div class="card-body" id="quotTableBody">${this._renderRows()}</div>
@@ -52,6 +59,20 @@ const QuotationsModule = {
   },
 
   init() {},
+
+  toggleSort() {
+    this._sortDesc = !this._sortDesc;
+    this._page = 1;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this._sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this._sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this._sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    const el = document.getElementById('quotTableBody');
+    if (el) el.innerHTML = this._renderRows();
+  },
 
   setFilter(f) {
     this._filter = f; this._page = 1;
@@ -76,7 +97,7 @@ const QuotationsModule = {
   },
 
   _filtered() {
-    let list = [...DB.quotations].reverse();
+    let list = [...DB.quotations];
     if (this._filter !== 'all') list = list.filter(q => q.status === this._filter);
     if (this._search) {
       const s = this._search.toLowerCase();
@@ -86,6 +107,7 @@ const QuotationsModule = {
         (q.number||'').toLowerCase().includes(s)
       );
     }
+    if (this._sortDesc) list.reverse();
     return list;
   },
 
@@ -155,7 +177,7 @@ const QuotationsModule = {
             value="${q ? q.clientData.name : ''}" autocomplete="off" />
           <div id="qfClientSug" style="display:none;position:absolute;top:calc(100% + 2px);left:0;right:0;
             background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-            box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;max-height:180px;overflow-y:auto"></div>
+            box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;max-height:180px;overflow-y:auto;overflow-x:hidden"></div>
         </div>
         <div id="qfClientCard" style="margin-top:10px">${q ? this._clientCardHtml(q.clientData) : ''}</div>
         <input type="hidden" id="qfClientId" value="${q ? (q.clientId||'') : ''}" />
@@ -168,12 +190,12 @@ const QuotationsModule = {
             oninput="QuotationsModule._searchProduct(this.value)" autocomplete="off" />
           <div id="qfProdSug" style="display:none;position:absolute;top:calc(100% + 2px);left:0;right:0;
             background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-            box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;max-height:220px;overflow-y:auto"></div>
+            box-shadow:0 4px 20px rgba(0,0,0,.1);z-index:200;max-height:220px;overflow-y:auto;overflow-x:hidden"></div>
         </div>
         <div id="qfItemsList"></div>
       </div>
 
-      <div class="form-grid form-grid-2" style="grid-template-columns:1fr 260px">
+      <div class="form-grid form-grid-2">
         <div class="card" style="padding:16px">
           <div style="font-weight:700;margin-bottom:10px;font-size:14px"><i class="fas fa-sliders"></i> Configuración</div>
           <div class="form-grid form-grid-2">
@@ -214,12 +236,16 @@ const QuotationsModule = {
 
   _clientCardHtml(cd) {
     if (!cd) return '';
-    return `<div style="background:var(--bg-2);border-radius:var(--radius);padding:10px;font-size:13px;display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div style="font-weight:700">${cd.name}</div>
-        <div style="color:var(--text-2);margin-top:2px">CI: ${cd.ci||'—'} · ${cd.phone||'—'} · ${cd.email||'—'}</div>
+    return `<div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;font-size:13px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+      <div style="min-width:0;flex:1">
+        <div style="font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cd.name}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:4px;font-size:12px;color:var(--text-2)">
+          ${cd.ci   ? `<span><i class="fas fa-id-card" style="opacity:.55;font-size:10px;margin-right:3px"></i>${cd.ci}</span>` : ''}
+          ${cd.phone? `<span><i class="fas fa-phone"   style="opacity:.55;font-size:10px;margin-right:3px"></i>${cd.phone}</span>` : ''}
+          ${cd.email? `<span><i class="fas fa-envelope" style="opacity:.55;font-size:10px;margin-right:3px"></i>${cd.email}</span>` : ''}
+        </div>
       </div>
-      <button class="btn btn-sm btn-outline-danger" onclick="QuotationsModule._clearClient()"><i class="fas fa-xmark"></i></button>
+      <button class="btn btn-sm btn-outline-danger" style="flex-shrink:0" onclick="QuotationsModule._clearClient()"><i class="fas fa-xmark"></i></button>
     </div>`;
   },
 
@@ -249,9 +275,10 @@ const QuotationsModule = {
     } else {
       sug.innerHTML = matches.map(c => `
         <div style="padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border);font-size:13px"
-          onmousedown="event.preventDefault();QuotationsModule._selectClient('${c.id}')">
-          <strong>${c.name}</strong>
-          <span style="color:var(--text-2);margin-left:8px">CI: ${c.ci||'—'} · ${c.phone||'—'}</span>
+          onmousedown="event.preventDefault();QuotationsModule._selectClient('${c.id}')"
+          onmouseover="this.style.background='var(--bg-2)'" onmouseout="this.style.background=''">
+          <div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.name}</div>
+          <div style="font-size:11px;color:var(--text-2);margin-top:2px">CI: ${c.ci||'—'} · ${c.phone||'—'}</div>
         </div>`).join('') + `
         <div style="padding:8px 12px;font-size:12px;color:var(--primary);cursor:pointer"
           onmousedown="event.preventDefault();QuotationsModule._createClientInline('${safeVal}')">

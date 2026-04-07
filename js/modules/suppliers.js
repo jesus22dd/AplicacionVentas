@@ -5,6 +5,7 @@
 const SuppliersModule = {
   search: '',
   statusFilter: 'all',
+  sortDesc: false,
 
   render() {
     const active = DB.suppliers.filter(s => s.status === 'active').length;
@@ -42,6 +43,12 @@ const SuppliersModule = {
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Buscar proveedor..." oninput="SuppliersModule.applySearch(this.value)" />
           </div>
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="SuppliersModule.toggleSort()"
+            title="${this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this.sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
           <select class="filter-select" onchange="SuppliersModule.applyStatus(this.value)">
             <option value="all">Todos</option>
             <option value="active">Activos</option>
@@ -66,6 +73,18 @@ const SuppliersModule = {
     this.renderTable();
   },
 
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this.sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    this.renderTable();
+  },
+
   getFiltered() {
     let items = [...DB.suppliers];
     if (this.statusFilter !== 'all') items = items.filter(s => s.status === this.statusFilter);
@@ -73,6 +92,7 @@ const SuppliersModule = {
       const t = this.search.toLowerCase();
       items = items.filter(s => s.name.toLowerCase().includes(t) || s.contact.toLowerCase().includes(t) || s.email.toLowerCase().includes(t));
     }
+    if (this.sortDesc) items.reverse();
     return items;
   },
 

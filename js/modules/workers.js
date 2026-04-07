@@ -5,6 +5,7 @@
 const WorkersModule = {
   search: '',
   statusFilter: 'all',
+  sortDesc: false,
 
   render() {
     const active = DB.workers.filter(w => w.status === 'active').length;
@@ -44,6 +45,12 @@ const WorkersModule = {
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Buscar trabajador..." oninput="WorkersModule.applySearch(this.value)" />
           </div>
+          <button class="btn btn-sm btn-secondary sort-toggle-btn" id="sortToggleBtn"
+            onclick="WorkersModule.toggleSort()"
+            title="${this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero'}">
+            <i class="fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}"></i>
+            <span class="sort-label">${this.sortDesc ? 'Más reciente' : 'Más antiguo'}</span>
+          </button>
           <select class="filter-select" onchange="WorkersModule.applyStatus(this.value)">
             <option value="all">Todos</option>
             <option value="active">Activos</option>
@@ -68,6 +75,18 @@ const WorkersModule = {
     this.renderTable();
   },
 
+  toggleSort() {
+    this.sortDesc = !this.sortDesc;
+    const btn = document.getElementById('sortToggleBtn');
+    if (btn) {
+      btn.querySelector('i').className = `fas ${this.sortDesc ? 'fa-arrow-down-wide-short' : 'fa-arrow-up-wide-short'}`;
+      const lbl = btn.querySelector('.sort-label');
+      if (lbl) lbl.textContent = this.sortDesc ? 'Más reciente' : 'Más antiguo';
+      btn.title = this.sortDesc ? 'Más antiguo primero' : 'Más reciente primero';
+    }
+    this.renderTable();
+  },
+
   getFiltered() {
     let items = [...DB.workers];
     if (this.statusFilter !== 'all') items = items.filter(w => w.status === this.statusFilter);
@@ -75,6 +94,7 @@ const WorkersModule = {
       const t = this.search.toLowerCase();
       items = items.filter(w => w.name.toLowerCase().includes(t) || w.role.toLowerCase().includes(t) || w.email.toLowerCase().includes(t));
     }
+    if (this.sortDesc) items.reverse();
     return items;
   },
 
