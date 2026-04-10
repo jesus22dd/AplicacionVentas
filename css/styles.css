@@ -6,6 +6,10 @@
   --primary:       #3b82f6;
   --primary-d:     #2563eb;
   --primary-l:     #dbeafe;
+  --navy:          #1e40af;
+  --navy-bg:       rgba(30,64,175,.06);
+  --guindo:        #7f1d1d;
+  --guindo-bg:     rgba(127,29,29,.06);
   --secondary:     #10b981;
   --secondary-d:   #059669;
   --secondary-l:   #d1fae5;
@@ -580,8 +584,8 @@ tbody tr:last-child td { border-bottom: none; }
 .checkout-btn-label { font-size: 13px; font-weight: 700; }
 .checkout-btn-total { font-size: 16px; font-weight: 800; }
 
-.btn-primary { background: var(--primary); color: #fff; }
-.btn-primary:hover { background: var(--primary-d); box-shadow: 0 4px 12px rgba(59,130,246,.35); }
+.btn-primary { background: transparent; color: var(--navy); border: 3px solid var(--navy); }
+.btn-primary:hover { background: var(--navy-bg); }
 .btn-secondary { background: var(--bg); color: var(--text-2); border: 1px solid var(--border); }
 .btn-secondary:hover { background: var(--border); }
 .btn-success { background: var(--secondary); color: #fff; }
@@ -592,10 +596,12 @@ tbody tr:last-child td { border-bottom: none; }
 .btn-warning:hover { background: #d97706; }
 .btn-purple { background: var(--purple); color: #fff; }
 .btn-purple:hover { background: #7c3aed; box-shadow: 0 4px 12px rgba(139,92,246,.35); }
-.btn-outline-primary { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
-.btn-outline-primary:hover { background: var(--primary-l); }
+.btn-outline-primary { background: transparent; color: var(--navy); border: 3px solid var(--navy); }
+.btn-outline-primary:hover { background: var(--navy-bg); }
 .btn-outline-danger { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); }
 .btn-outline-danger:hover { background: var(--danger-l); }
+.btn-cancel { background: transparent; color: var(--guindo); border: 3px solid var(--guindo); }
+.btn-cancel:hover { background: var(--guindo-bg); }
 
 /* ============================================================
    FORMS
@@ -716,7 +722,7 @@ select.form-control { cursor: pointer; }
   transition: all var(--transition);
 }
 .page-btn:hover, .page-btn.active {
-  background: var(--primary); border-color: var(--primary); color: #fff;
+  background: transparent; border: 3px solid var(--navy); color: var(--navy);
 }
 .page-btn:disabled { opacity: .4; cursor: not-allowed; pointer-events: none; }
 
@@ -847,8 +853,8 @@ select.form-control { cursor: pointer; }
   padding: 7px 10px;
   transition: all var(--transition);
 }
-.pos-sort-btn:hover, .pos-clear-btn:hover { border-color: var(--primary); color: var(--primary); }
-.pos-sort-btn.active { background: var(--primary-l); border-color: var(--primary); color: var(--primary); }
+.pos-sort-btn:hover, .pos-clear-btn:hover { border: 3px solid var(--navy); color: var(--navy); }
+.pos-sort-btn.active { background: transparent; border: 3px solid var(--navy); color: var(--navy); }
 
 /* Currency toggle button in POS header */
 .pos-currency-btn {
@@ -860,8 +866,8 @@ select.form-control { cursor: pointer; }
   padding: 7px 12px;
   transition: all var(--transition);
 }
-.pos-currency-btn:hover { border-color: var(--primary); color: var(--primary); }
-.pos-currency-btn.active { background: var(--primary-l); border-color: var(--primary); color: var(--primary); }
+.pos-currency-btn:hover { border: 3px solid var(--navy); color: var(--navy); }
+.pos-currency-btn.active { background: transparent; border: 3px solid var(--navy); color: var(--navy); }
 
 .pos-cat-tabs {
   padding: 10px 16px;
@@ -880,8 +886,8 @@ select.form-control { cursor: pointer; }
   transition: all var(--transition);
   flex-shrink: 0;
 }
-.pos-cat-tab:hover { border-color: var(--primary); color: var(--primary); }
-.pos-cat-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.pos-cat-tab:hover { border: 3px solid var(--navy); color: var(--navy); }
+.pos-cat-tab.active { background: transparent; border: 3px solid var(--navy); color: var(--navy); }
 
 .pos-products-grid {
   flex: 1; overflow-y: auto;
@@ -964,7 +970,7 @@ select.form-control { cursor: pointer; }
   font-size: 12px; cursor: pointer; color: var(--text-2);
   transition: all var(--transition);
 }
-.qty-btn:hover { border-color: var(--primary); color: var(--primary); }
+.qty-btn:hover { border: 3px solid var(--navy); color: var(--navy); }
 .qty-val { font-size: 13px; font-weight: 700; min-width: 20px; text-align: center; }
 .cart-item-del {
   background: none; border: none; padding: 4px;
@@ -1017,7 +1023,7 @@ select.form-control { cursor: pointer; }
   display: flex; flex-direction: column; align-items: center; gap: 4px;
 }
 .pay-method i { font-size: 16px; }
-.pay-method.active { border-color: var(--primary); background: var(--primary-l); color: var(--primary); }
+.pay-method.active { border: 3px solid var(--navy); background: transparent; color: var(--navy); }
 
 /* Checkout client type buttons */
 .chk-type-btn {
@@ -1740,7 +1746,7 @@ select.form-control { cursor: pointer; }
     gap: 6px; min-height: 44px;
     transition: background .15s, color .15s;
   }
-  .pos-mtab.active { background: var(--primary); color: #fff; }
+  .pos-mtab.active { background: transparent; border-top: 3px solid var(--navy); color: var(--navy); }
   .pos-mtab-badge {
     background: var(--danger); color: #fff; border-radius: 20px;
     font-size: 10px; font-weight: 700; min-width: 18px; height: 18px;
@@ -1756,10 +1762,10 @@ select.form-control { cursor: pointer; }
   /* POS FAB */
   .pos-cart-fab {
     position: fixed; bottom: 24px; right: 20px; z-index: 200;
-    background: var(--primary); color: #fff;
-    border: none; border-radius: 28px; padding: 14px 20px;
+    background: transparent; color: var(--navy);
+    border: 3px solid var(--navy); border-radius: 28px; padding: 14px 20px;
     font-size: 14px; font-weight: 700; cursor: pointer;
-    box-shadow: 0 4px 18px rgba(37,99,235,.45);
+    box-shadow: 0 4px 18px rgba(30,64,175,.2);
     display: flex; align-items: center; gap: 8px;
     min-height: 44px; animation: fabPop .2s ease;
   }
@@ -1855,10 +1861,10 @@ select.form-control { cursor: pointer; }
   background: var(--bg-2); border: 1.5px solid var(--border);
   color: var(--text-2); transition: all var(--transition);
 }
-.chip:hover { background: var(--bg-3); border-color: var(--primary); color: var(--primary); }
+.chip:hover { background: var(--navy-bg); border: 3px solid var(--navy); color: var(--navy); }
 .chip.chip-active {
-  background: var(--primary); border-color: var(--primary);
-  color: #fff; font-weight: 600;
+  background: transparent; border: 3px solid var(--navy);
+  color: var(--navy); font-weight: 600;
 }
 .chip-count {
   background: rgba(0,0,0,.12); color: inherit;

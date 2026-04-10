@@ -435,7 +435,7 @@ const ConfigModule = {
         </div>`).join('')}
       </div>
       <div style="display:flex;justify-content:flex-end;margin-top:16px">
-        <button class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
       </div>
     </div>`, 'modal-md');
   },
@@ -517,7 +517,7 @@ const ConfigModule = {
       <form onsubmit="ConfigModule.savePayMethod(event,'${id}')">
         ${extraFields}
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-          <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+          <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
           <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
         </div>
       </form>`, 'modal-md');

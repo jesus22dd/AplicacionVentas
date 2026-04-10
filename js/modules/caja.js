@@ -134,7 +134,7 @@ const CajaModule = {
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-primary"><i class="fas fa-unlock"></i> Abrir Caja</button>
       </div>
     </form>`);
@@ -217,7 +217,7 @@ const CajaModule = {
       </div>
       <input type="hidden" name="expectedAmt" value="${expected}" />
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-danger"><i class="fas fa-lock"></i> Confirmar Cierre</button>
       </div>
     </form>`, 'modal-lg');

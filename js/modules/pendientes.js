@@ -172,7 +172,7 @@ const PendientesModule = {
         </div>
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar Montos</button>
       </div>
     </form>`;
@@ -218,7 +218,7 @@ const PendientesModule = {
         <textarea class="form-control" name="notes" rows="2">${current?.notes||''}</textarea>
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar</button>
       </div>
     </form>`;

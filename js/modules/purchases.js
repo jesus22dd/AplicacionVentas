@@ -300,7 +300,7 @@ const PurchasesModule = {
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Crear Orden</button>
       </div>
     </form>`, 'modal-lg');

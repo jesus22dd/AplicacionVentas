@@ -478,7 +478,7 @@ const POSModule = {
       </div>
 
       <div class="modal-footer" style="padding-top:0">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()"><i class="fas fa-xmark"></i> Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()"><i class="fas fa-xmark"></i> Cancelar</button>
         <button type="submit" class="btn btn-success btn-checkout-confirm">
           <i class="fas fa-check-circle" style="font-size:16px;flex-shrink:0"></i>
           <span class="checkout-btn-text">

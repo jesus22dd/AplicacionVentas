@@ -314,7 +314,7 @@ const InventoryModule = {
       <input class="form-control" id="adjustReason" placeholder="Ej: Reposición, Merma..." />
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+      <button class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
       <button class="btn btn-primary" onclick="InventoryModule.applyAdjust('${prodId}','${dir}')">
         <i class="fas fa-check"></i> Aplicar
       </button>
@@ -372,7 +372,7 @@ const InventoryModule = {
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
       </div>
     </form>`, 'modal-lg');

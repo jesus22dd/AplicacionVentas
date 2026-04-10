@@ -3,58 +3,234 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Validar Documento — ElectroShop</title>
+  <title>Verificación de Documento — ElectroShop</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .card { background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,.1); max-width: 520px; width: 100%; overflow: hidden; }
-    .header { background: linear-gradient(135deg, #2563eb, #1d4ed8); padding: 32px 28px; text-align: center; color: #fff; }
-    .logo { width: 56px; height: 56px; border-radius: 14px; background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; margin: 0 auto 14px; }
-    .header h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-    .header p { font-size: 13px; opacity: .8; }
-    .body { padding: 28px; }
-    .status-box { border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px; }
-    .status-ok { background: #f0fdf4; border: 2px solid #86efac; }
-    .status-err { background: #fef2f2; border: 2px solid #fca5a5; }
-    .status-icon { font-size: 36px; margin-bottom: 10px; }
-    .status-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
-    .status-ok .status-title { color: #15803d; }
-    .status-err .status-title { color: #dc2626; }
-    .status-sub { font-size: 13px; }
-    .status-ok .status-sub { color: #166534; }
-    .status-err .status-sub { color: #991b1b; }
-    .info-grid { display: grid; gap: 10px; }
-    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      color: #1e293b;
+    }
+
+    /* ── Wrapper ── */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      max-width: 500px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06), 0 0 0 0 transparent;
+    }
+
+    /* ── Franja superior de marca ── */
+    .brand-strip {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 24px 28px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand-mark {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      border: 3px solid #1e40af;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 800;
+      color: #1e40af;
+      flex-shrink: 0;
+      letter-spacing: -1px;
+    }
+    .brand-info { flex: 1; }
+    .brand-name {
+      font-size: 16px; font-weight: 800;
+      color: #0f172a; letter-spacing: -.3px;
+    }
+    .brand-sub {
+      font-size: 11.5px; color: #94a3b8; font-weight: 500;
+      margin-top: 2px; letter-spacing: .2px;
+    }
+    .brand-badge {
+      font-size: 10px; font-weight: 700;
+      padding: 4px 10px; border-radius: 99px;
+      border: 1.5px solid #e2e8f0;
+      color: #64748b; letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    /* ── Cuerpo ── */
+    .body { padding: 24px 28px; }
+
+    /* ── Estado ── */
+    .status-block {
+      border-radius: 12px;
+      border: 2px solid;
+      padding: 20px 20px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .status-block.ok  { border-color: #86efac; background: #f0fdf4; }
+    .status-block.err { border-color: #fca5a5; background: #fef2f2; }
+    .status-block.warn { border-color: #fcd34d; background: #fffbeb; }
+
+    .status-icon-wrap {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px; flex-shrink: 0;
+    }
+    .ok  .status-icon-wrap { background: #dcfce7; }
+    .err .status-icon-wrap { background: #fee2e2; }
+    .warn .status-icon-wrap { background: #fef3c7; }
+
+    .status-text { flex: 1; padding-top: 2px; }
+    .status-title {
+      font-size: 15px; font-weight: 800;
+      margin-bottom: 3px;
+    }
+    .ok  .status-title { color: #15803d; }
+    .err .status-title { color: #991b1b; }
+    .warn .status-title { color: #92400e; }
+
+    .status-sub {
+      font-size: 12.5px; line-height: 1.5;
+    }
+    .ok  .status-sub { color: #166534; }
+    .err .status-sub { color: #b91c1c; }
+    .warn .status-sub { color: #78350f; }
+
+    /* ── Sección de datos ── */
+    .section-label {
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: #e2e8f0;
+    }
+
+    .info-grid { display: flex; flex-direction: column; }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      gap: 12px;
+    }
     .info-row:last-child { border-bottom: none; }
-    .info-label { color: #64748b; font-weight: 500; }
-    .info-value { font-weight: 700; color: #0f172a; text-align: right; max-width: 60%; }
-    .badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-    .badge-ok { background: #dcfce7; color: #15803d; }
+    .info-label {
+      font-size: 12.5px; color: #64748b; font-weight: 500;
+      white-space: nowrap;
+    }
+    .info-value {
+      font-size: 13px; font-weight: 700; color: #0f172a;
+      text-align: right; word-break: break-word; max-width: 62%;
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 99px;
+      font-size: 11.5px; font-weight: 600;
+    }
+    .badge-ok   { background: #dcfce7; color: #15803d; }
     .badge-warn { background: #fef9c3; color: #854d0e; }
-    .badge-err { background: #fee2e2; color: #dc2626; }
-    .footer { background: #f8fafc; padding: 16px 28px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
-    .loading { text-align: center; padding: 40px; color: #64748b; }
-    .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
+    .badge-err  { background: #fee2e2; color: #991b1b; }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: #f1f5f9; margin: 20px 0; }
+
+    /* ── Footer ── */
+    .footer {
+      background: #0f172a;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .footer-brand {
+      font-size: 12px; font-weight: 700;
+      color: #fff; letter-spacing: -.2px;
+    }
+    .footer-brand span { color: #1e40af; }
+    .footer-meta {
+      font-size: 11px; color: #475569; text-align: right;
+    }
+
+    /* ── Loading ── */
+    .loading {
+      text-align: center; padding: 48px 20px; color: #64748b;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #1e40af;
+      border-radius: 50%;
+      animation: spin .75s linear infinite;
+      margin: 0 auto 14px;
+    }
+    .loading-text { font-size: 13px; font-weight: 500; }
+
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Watermark número ── */
+    .doc-id-strip {
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 28px;
+      font-size: 10.5px; font-weight: 600;
+      color: #94a3b8; letter-spacing: .8px;
+      text-transform: uppercase;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .doc-id-strip .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #1e40af; flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
+
   <div class="card">
-    <div class="header">
-      <div class="logo">E</div>
-      <h1>ElectroShop POS</h1>
-      <p>Verificación de documento</p>
+
+    <!-- Marca -->
+    <div class="brand-strip">
+      <div class="brand-mark">ES</div>
+      <div class="brand-info">
+        <div class="brand-name">ElectroShop POS</div>
+        <div class="brand-sub">Sistema de punto de venta · Cochabamba, Bolivia</div>
+      </div>
+      <div class="brand-badge">Verificación</div>
     </div>
+
+    <!-- Resultado -->
     <div class="body" id="resultBody">
       <div class="loading">
         <div class="spinner"></div>
-        <div>Verificando documento...</div>
+        <div class="loading-text">Verificando documento...</div>
       </div>
     </div>
+
+    <!-- Footer -->
     <div class="footer">
-      ElectroShop POS v2.0 &nbsp;·&nbsp; Cochabamba, Bolivia &nbsp;·&nbsp; Verificación automática
+      <div class="footer-brand">Electro<span>Shop</span> v2.0</div>
+      <div class="footer-meta">Verificación automática de documentos</div>
     </div>
+
   </div>
 
   <script src="js/data.js"></script>
@@ -69,20 +245,34 @@
         document.getElementById('resultBody').innerHTML = html;
       }
 
-      function statusBox(ok, title, sub) {
-        return `<div class="status-box ${ok ? 'status-ok' : 'status-err'}">
-          <div class="status-icon">${ok ? '✅' : '❌'}</div>
-          <div class="status-title">${title}</div>
-          <div class="status-sub">${sub}</div>
-        </div>`;
+      function statusBlock(type, icon, title, sub) {
+        return `
+          <div class="status-block ${type}">
+            <div class="status-icon-wrap">${icon}</div>
+            <div class="status-text">
+              <div class="status-title">${title}</div>
+              <div class="status-sub">${sub}</div>
+            </div>
+          </div>`;
+      }
+
+      function sectionLabel(text) {
+        return `<div class="section-label">${text}</div>`;
       }
 
       function infoRow(label, value) {
-        return `<div class="info-row"><span class="info-label">${label}</span><span class="info-value">${value}</span></div>`;
+        return `<div class="info-row">
+          <span class="info-label">${label}</span>
+          <span class="info-value">${value}</span>
+        </div>`;
       }
 
       function badge(text, type) {
         return `<span class="badge badge-${type}">${text}</span>`;
+      }
+
+      function docIdStrip(text) {
+        return `<div class="doc-id-strip"><div class="dot"></div>${text}</div>`;
       }
 
       function fmtDate(str) {
@@ -92,11 +282,10 @@
       }
 
       if (!id || !hash) {
-        render(statusBox(false, 'Enlace inválido', 'El código QR no contiene información válida. Solicita uno nuevo.'));
+        render(statusBlock('err', '⚠️', 'Enlace inválido', 'El código QR no contiene información válida. Solicita un documento nuevo al emisor.'));
         return;
       }
 
-      // Look for quotation or sale
       let doc = null;
       let docType = '';
 
@@ -109,13 +298,11 @@
       }
 
       if (!doc) {
-        render(statusBox(false, 'Documento no encontrado', `No se encontró ningún documento con el ID "${id}" en el sistema.`));
+        render(statusBlock('err', '🔍', 'Documento no encontrado', `No existe ningún registro con el ID <strong>${id}</strong> en el sistema. Puede que haya sido anulado.`));
         return;
       }
 
-      // Verify hash
       const hashMatch = doc.qrHash && (doc.qrHash === hash || hash.startsWith(doc.qrHash.substring(0, 8)));
-
       const sym = 'Bs.';
       const cfg = DB.config || {};
 
@@ -123,41 +310,78 @@
         const q = doc;
         const statusLabels = { pending:'Pendiente', accepted:'Aceptada', rejected:'Rechazada', expired:'Vencida' };
         const statusBadge  = { pending:'warn', accepted:'ok', rejected:'err', expired:'warn' };
-        const now = new Date();
-        const validDate = new Date(q.validUntil);
-        const isExpired = validDate < now;
+        const isExpired    = new Date(q.validUntil) < new Date();
+
+        const statusType = hashMatch ? 'ok' : 'warn';
+        const statusIcon = hashMatch ? '✅' : '⚠️';
+        const statusTitle = hashMatch ? 'Cotización verificada' : 'Verificación parcial';
+        const statusSub   = hashMatch
+          ? 'El documento es auténtico y fue emitido por ElectroShop POS.'
+          : 'No se pudo verificar completamente la firma digital del documento.';
 
         render(`
-          ${statusBox(hashMatch, hashMatch ? 'Documento Verificado' : 'Verificación Parcial', hashMatch ? 'La cotización es auténtica y fue emitida por ElectroShop.' : 'No se pudo verificar completamente la firma digital.')}
-          <div class="info-grid">
-            ${infoRow('Tipo', 'Cotización')}
-            ${infoRow('Número', `${q.id} — ${q.number||''}`)}
-            ${infoRow('Cliente', q.clientData?.name || '—')}
-            ${infoRow('Fecha de emisión', fmtDate(q.createdAt))}
-            ${infoRow('Válida hasta', fmtDate(q.validUntil) + (isExpired ? ' <span style="color:#dc2626;font-size:11px">(VENCIDA)</span>' : ''))}
-            ${infoRow('Artículos', q.items?.length + ' producto(s)')}
-            ${infoRow('Total USD', '$' + (q.total||0).toFixed(2))}
-            ${infoRow('Total Bs.', sym + ' ' + (q.totalBs||0).toFixed(2))}
-            ${infoRow('Estado', badge(statusLabels[q.status]||q.status, statusBadge[q.status]||'warn'))}
+          ${statusBlock(statusType, statusIcon, statusTitle, statusSub)}
+          ${docIdStrip(`Cotización · ${q.id}${q.number ? ' — ' + q.number : ''}`)}
+          <div style="padding: 20px 0 4px">
+            ${sectionLabel('Datos del documento')}
+            <div class="info-grid">
+              ${infoRow('Tipo de documento', 'Cotización')}
+              ${infoRow('Cliente', q.clientData?.name || '—')}
+              ${infoRow('Fecha de emisión', fmtDate(q.createdAt))}
+              ${infoRow('Válida hasta', fmtDate(q.validUntil) + (isExpired ? '&nbsp;<span style="color:#dc2626;font-size:10.5px;font-weight:600">(VENCIDA)</span>' : ''))}
+              ${infoRow('Productos', (q.items?.length || 0) + ' artículo(s)')}
+            </div>
+            <div class="divider"></div>
+            ${sectionLabel('Montos')}
+            <div class="info-grid">
+              ${infoRow('Total en USD', '<span style="font-size:15px">$&nbsp;' + (q.total||0).toFixed(2) + '</span>')}
+              ${infoRow('Total en Bs.', sym + '&nbsp;' + (q.totalBs||0).toFixed(2))}
+            </div>
+            <div class="divider"></div>
+            ${sectionLabel('Estado')}
+            <div class="info-grid">
+              ${infoRow('Estado actual', badge(statusLabels[q.status] || q.status, statusBadge[q.status] || 'warn'))}
+              ${infoRow('Firma digital', badge(hashMatch ? 'Válida' : 'No verificada', hashMatch ? 'ok' : 'warn'))}
+            </div>
           </div>`);
+
       } else {
         const s = doc;
-        const payLabels = { efectivo:'Efectivo', tarjeta:'Tarjeta', transferencia:'Transferencia', qr:'QR', delivery:'Delivery' };
-        const totalBs = (s.total * (cfg.exchangeRate || 9.35)).toFixed(2);
+        const payLabels = { efectivo:'Efectivo', tarjeta:'Tarjeta', transferencia:'Transferencia', qr:'QR Pago', delivery:'Delivery' };
+        const totalBs = ((s.total || 0) * (cfg.exchangeRate || 9.35)).toFixed(2);
+
+        const statusType  = hashMatch ? 'ok' : 'warn';
+        const statusIcon  = hashMatch ? '✅' : '⚠️';
+        const statusTitle = hashMatch ? 'Venta verificada' : 'Verificación parcial';
+        const statusSub   = hashMatch
+          ? 'La transacción es auténtica y fue registrada en ElectroShop POS.'
+          : 'No se pudo verificar completamente la firma digital del documento.';
 
         render(`
-          ${statusBox(hashMatch, hashMatch ? 'Venta Verificada' : 'Verificación Parcial', hashMatch ? 'La venta es auténtica y fue registrada en ElectroShop.' : 'No se pudo verificar completamente la firma digital.')}
-          <div class="info-grid">
-            ${infoRow('Tipo', 'Venta')}
-            ${infoRow('ID de venta', s.id)}
-            ${infoRow('Cliente', s.custName || '—')}
-            ${infoRow('Cajero/a', s.workName || '—')}
-            ${infoRow('Fecha', fmtDate(s.date))}
-            ${infoRow('Artículos', (s.items?.length||0) + ' producto(s)')}
-            ${infoRow('Total USD', '$' + (s.total||0).toFixed(2))}
-            ${infoRow('Total Bs.', sym + ' ' + totalBs)}
-            ${infoRow('Método de pago', payLabels[s.method]||s.method||'—')}
-            ${infoRow('Estado', badge('Completada', 'ok'))}
+          ${statusBlock(statusType, statusIcon, statusTitle, statusSub)}
+          ${docIdStrip(`Venta · ${s.id}`)}
+          <div style="padding: 20px 0 4px">
+            ${sectionLabel('Datos de la transacción')}
+            <div class="info-grid">
+              ${infoRow('Tipo de documento', 'Venta / Recibo')}
+              ${infoRow('Cliente', s.custName || '—')}
+              ${infoRow('Atendido por', s.workName || '—')}
+              ${infoRow('Fecha', fmtDate(s.date))}
+              ${infoRow('Productos', (s.items?.length || 0) + ' artículo(s)')}
+              ${infoRow('Método de pago', payLabels[s.method] || s.method || '—')}
+            </div>
+            <div class="divider"></div>
+            ${sectionLabel('Montos')}
+            <div class="info-grid">
+              ${infoRow('Total en USD', '<span style="font-size:15px">$&nbsp;' + (s.total||0).toFixed(2) + '</span>')}
+              ${infoRow('Total en Bs.', sym + '&nbsp;' + totalBs)}
+            </div>
+            <div class="divider"></div>
+            ${sectionLabel('Estado')}
+            <div class="info-grid">
+              ${infoRow('Estado de la venta', badge('Completada', 'ok'))}
+              ${infoRow('Firma digital', badge(hashMatch ? 'Válida' : 'No verificada', hashMatch ? 'ok' : 'warn'))}
+            </div>
           </div>`);
       }
     })();

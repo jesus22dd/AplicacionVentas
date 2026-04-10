@@ -235,7 +235,7 @@ const RolesModule = {
       </div>
 
       <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-primary">
           <i class="fas fa-save"></i> ${id ? 'Actualizar' : 'Crear'} Rol
         </button>

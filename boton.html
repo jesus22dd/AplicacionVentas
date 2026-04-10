@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prueba de Botones — Azul Marino</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f1f5f9; padding: 40px 32px; color: #0f172a; }
+
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 40px; }
+
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #94a3b8;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px; background: #e2e8f0;
+  }
+
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 16px; }
+  .label { font-size: 11px; color: #94a3b8; width: 100%; margin-bottom: -8px; font-weight: 600; }
+
+  /* ── BASE BOTONES ── */
+  button {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .18s ease;
+    border: 1.5px solid transparent;
+    outline: none;
+  }
+  button.sm { padding: 6px 14px; font-size: 12px; }
+  button.pill { border-radius: 99px; padding: 6px 14px; font-size: 12px; }
+  button.icon-only { padding: 7px 10px; }
+
+  /* ═══════════════════════════════════════
+     ACTUAL (celeste/azul actual)
+  ═══════════════════════════════════════ */
+  .actual-primary {
+    background: #3b82f6; color: #fff; border-color: #3b82f6;
+  }
+  .actual-primary:hover { background: #2563eb; }
+
+  .actual-outline {
+    background: transparent; color: #3b82f6; border-color: #3b82f6;
+  }
+  .actual-outline:hover { background: #dbeafe; }
+
+  .actual-tab {
+    background: #f8fafc; color: #64748b; border-color: #e2e8f0;
+    border-radius: 99px;
+  }
+  .actual-tab.active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+
+  .actual-pagbtn {
+    width: 32px; height: 32px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    background: #fff; border-color: #e2e8f0; color: #64748b;
+    border-radius: 7px;
+  }
+  .actual-pagbtn.active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+
+  .actual-toggle {
+    background: #f1f5f9; border-color: #e2e8f0; color: #64748b;
+  }
+  .actual-toggle.active { background: #dbeafe; border-color: #3b82f6; color: #3b82f6; }
+
+  /* ═══════════════════════════════════════
+     VARIANTE A — Navy #1e3a5f  (oscuro intenso)
+  ═══════════════════════════════════════ */
+  :root { --navy-a: #1e3a5f; --navy-a-bg: rgba(30,58,95,.06); }
+
+  .a-primary {
+    background: transparent; color: var(--navy-a);
+    border: 2px solid var(--navy-a);
+  }
+  .a-primary:hover { background: var(--navy-a-bg); }
+
+  .a-outline {
+    background: transparent; color: var(--navy-a);
+    border: 2px solid var(--navy-a);
+  }
+  .a-outline:hover { background: var(--navy-a-bg); }
+
+  .a-tab {
+    background: #f8fafc; color: #64748b; border-color: #e2e8f0;
+    border-radius: 99px; border-width: 1.5px;
+  }
+  .a-tab.active {
+    background: transparent; border: 2px solid var(--navy-a);
+    color: var(--navy-a);
+  }
+
+  .a-pagbtn {
+    width: 32px; height: 32px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    background: #fff; border-color: #e2e8f0; color: #64748b;
+    border-radius: 7px;
+  }
+  .a-pagbtn.active {
+    background: transparent; border: 2px solid var(--navy-a); color: var(--navy-a);
+  }
+
+  .a-toggle {
+    background: #f1f5f9; border-color: #e2e8f0; color: #64748b;
+  }
+  .a-toggle.active {
+    background: transparent; border: 2px solid var(--navy-a); color: var(--navy-a);
+  }
+
+  /* ═══════════════════════════════════════
+     VARIANTE B — Navy #1e40af  (azul marino medio)
+  ═══════════════════════════════════════ */
+  :root { --navy-b: #1e40af; --navy-b-bg: rgba(30,64,175,.06); }
+
+  .b-primary {
+    background: transparent; color: var(--navy-b);
+    border: 2px solid var(--navy-b);
+  }
+  .b-primary:hover { background: var(--navy-b-bg); }
+
+  .b-outline {
+    background: transparent; color: var(--navy-b);
+    border: 2px solid var(--navy-b);
+  }
+  .b-outline:hover { background: var(--navy-b-bg); }
+
+  .b-tab {
+    background: #f8fafc; color: #64748b; border-color: #e2e8f0;
+    border-radius: 99px; border-width: 1.5px;
+  }
+  .b-tab.active {
+    background: transparent; border: 2px solid var(--navy-b);
+    color: var(--navy-b);
+  }
+
+  .b-pagbtn {
+    width: 32px; height: 32px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    background: #fff; border-color: #e2e8f0; color: #64748b;
+    border-radius: 7px;
+  }
+  .b-pagbtn.active {
+    background: transparent; border: 2px solid var(--navy-b); color: var(--navy-b);
+  }
+
+  .b-toggle {
+    background: #f1f5f9; border-color: #e2e8f0; color: #64748b;
+  }
+  .b-toggle.active {
+    background: transparent; border: 2px solid var(--navy-b); color: var(--navy-b);
+  }
+
+  /* ═══════════════════════════════════════
+     VARIANTE C — Navy #0f2d57  (marino muy oscuro)
+  ═══════════════════════════════════════ */
+  :root { --navy-c: #0f2d57; --navy-c-bg: rgba(15,45,87,.05); }
+
+  .c-primary {
+    background: transparent; color: var(--navy-c);
+    border: 2px solid var(--navy-c);
+  }
+  .c-primary:hover { background: var(--navy-c-bg); }
+
+  .c-outline {
+    background: transparent; color: var(--navy-c);
+    border: 2px solid var(--navy-c);
+  }
+  .c-outline:hover { background: var(--navy-c-bg); }
+
+  .c-tab {
+    background: #f8fafc; color: #64748b; border-color: #e2e8f0;
+    border-radius: 99px; border-width: 1.5px;
+  }
+  .c-tab.active {
+    background: transparent; border: 2px solid var(--navy-c);
+    color: var(--navy-c);
+  }
+
+  .c-pagbtn {
+    width: 32px; height: 32px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+    background: #fff; border-color: #e2e8f0; color: #64748b;
+    border-radius: 7px;
+  }
+  .c-pagbtn.active {
+    background: transparent; border: 2px solid var(--navy-c); color: var(--navy-c);
+  }
+
+  .c-toggle {
+    background: #f1f5f9; border-color: #e2e8f0; color: #64748b;
+  }
+  .c-toggle.active {
+    background: transparent; border: 2px solid var(--navy-c); color: var(--navy-c);
+  }
+
+  /* ── Tarjeta de sección ── */
+  .card {
+    background: #fff; border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 24px 28px;
+    margin-bottom: 12px;
+  }
+  .card-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px; border-radius: 99px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .4px;
+  }
+  .badge-actual { background: #dbeafe; color: #1d4ed8; }
+  .badge-a { background: rgba(30,58,95,.1); color: #1e3a5f; }
+  .badge-b { background: rgba(30,64,175,.1); color: #1e40af; }
+  .badge-c { background: rgba(15,45,87,.1); color: #0f2d57; }
+
+  /* Contexto visual tipo app */
+  .demo-bar {
+    display: flex; gap: 6px; padding: 10px 14px;
+    background: #fff; border-radius: 10px; border: 1px solid #e2e8f0;
+    overflow-x: auto; width: fit-content; max-width: 100%;
+  }
+  .pay-grid { display: flex; gap: 8px; }
+  .pay-card {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid #e2e8f0; border-radius: 8px;
+    font-size: 11px; font-weight: 600;
+    cursor: pointer; text-align: center;
+    background: #f8fafc; color: #64748b;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    min-width: 70px;
+  }
+  .pay-card i { font-size: 16px; }
+
+  /* active actual */
+  .pay-card.act-actual { border-color: #3b82f6; background: #dbeafe; color: #3b82f6; }
+  /* active A */
+  .pay-card.act-a { border: 2px solid #1e3a5f; background: transparent; color: #1e3a5f; }
+  /* active B */
+  .pay-card.act-b { border: 2px solid #1e40af; background: transparent; color: #1e40af; }
+  /* active C */
+  .pay-card.act-c { border: 2px solid #0f2d57; background: transparent; color: #0f2d57; }
+
+  .separator { height: 1px; background: #f1f5f9; margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<h1>Prueba de Botones — Estilos Azul Marino</h1>
+<p class="subtitle">Compara el estilo actual (celeste/azul) con 3 variantes de azul marino borde-solamente.</p>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- ACTUAL -->
+<!-- ════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">ACTUAL — Azul celeste #3b82f6 (lo que hay hoy)</div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="badge badge-actual">ACTUAL</span>
+      <span style="font-size:13px;color:#64748b">Botones de acción primarios</span>
+    </div>
+    <div class="row">
+      <div class="label">btn-primary / btn-outline-primary</div>
+      <button class="actual-primary"><i class="fas fa-save"></i> Guardar</button>
+      <button class="actual-primary"><i class="fas fa-plus"></i> Nuevo</button>
+      <button class="actual-outline"><i class="fas fa-upload"></i> Subir imagen</button>
+      <button class="actual-outline sm"><i class="fas fa-eye"></i> Ver</button>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Tabs de categorías (POS — "Todos")</div>
+      <div class="demo-bar">
+        <button class="actual-tab active">Todos</button>
+        <button class="actual-tab">Cables</button>
+        <button class="actual-tab">Audio</button>
+        <button class="actual-tab">Drones</button>
+        <button class="actual-tab">Gaming</button>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Paginación / Método de pago / Toggles</div>
+      <button class="actual-pagbtn active">1</button>
+      <button class="actual-pagbtn">2</button>
+      <button class="actual-pagbtn">3</button>
+      &nbsp;
+      <div class="pay-grid">
+        <div class="pay-card act-actual"><i class="fas fa-money-bill"></i>Efectivo</div>
+        <div class="pay-card"><i class="fas fa-qrcode"></i>QR</div>
+        <div class="pay-card"><i class="fas fa-credit-card"></i>Tarjeta</div>
+      </div>
+      &nbsp;
+      <button class="actual-toggle active sm"><i class="fas fa-arrow-up-z-a"></i> Precio ↑</button>
+      <button class="actual-toggle sm">Stock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- VARIANTE A -->
+<!-- ════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">VARIANTE A — Navy #1e3a5f (marino oscuro intenso)</div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="badge badge-a">A</span>
+      <span style="font-size:13px;color:#64748b">Borde 2px · Fondo transparente · Color #1e3a5f</span>
+    </div>
+    <div class="row">
+      <div class="label">btn-primary / btn-outline (ahora solo borde)</div>
+      <button class="a-primary"><i class="fas fa-save"></i> Guardar</button>
+      <button class="a-primary"><i class="fas fa-plus"></i> Nuevo</button>
+      <button class="a-outline"><i class="fas fa-upload"></i> Subir imagen</button>
+      <button class="a-outline sm"><i class="fas fa-eye"></i> Ver</button>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Tabs de categorías (POS — "Todos")</div>
+      <div class="demo-bar">
+        <button class="a-tab active">Todos</button>
+        <button class="a-tab">Cables</button>
+        <button class="a-tab">Audio</button>
+        <button class="a-tab">Drones</button>
+        <button class="a-tab">Gaming</button>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Paginación / Método de pago / Toggles</div>
+      <button class="a-pagbtn active">1</button>
+      <button class="a-pagbtn">2</button>
+      <button class="a-pagbtn">3</button>
+      &nbsp;
+      <div class="pay-grid">
+        <div class="pay-card act-a"><i class="fas fa-money-bill"></i>Efectivo</div>
+        <div class="pay-card"><i class="fas fa-qrcode"></i>QR</div>
+        <div class="pay-card"><i class="fas fa-credit-card"></i>Tarjeta</div>
+      </div>
+      &nbsp;
+      <button class="a-toggle active sm"><i class="fas fa-arrow-up-z-a"></i> Precio ↑</button>
+      <button class="a-toggle sm">Stock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- VARIANTE B -->
+<!-- ════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">VARIANTE B — Navy #1e40af (azul marino medio)</div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="badge badge-b">B</span>
+      <span style="font-size:13px;color:#64748b">Borde 2px · Fondo transparente · Color #1e40af</span>
+    </div>
+    <div class="row">
+      <div class="label">btn-primary / btn-outline (ahora solo borde)</div>
+      <button class="b-primary"><i class="fas fa-save"></i> Guardar</button>
+      <button class="b-primary"><i class="fas fa-plus"></i> Nuevo</button>
+      <button class="b-outline"><i class="fas fa-upload"></i> Subir imagen</button>
+      <button class="b-outline sm"><i class="fas fa-eye"></i> Ver</button>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Tabs de categorías (POS — "Todos")</div>
+      <div class="demo-bar">
+        <button class="b-tab active">Todos</button>
+        <button class="b-tab">Cables</button>
+        <button class="b-tab">Audio</button>
+        <button class="b-tab">Drones</button>
+        <button class="b-tab">Gaming</button>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Paginación / Método de pago / Toggles</div>
+      <button class="b-pagbtn active">1</button>
+      <button class="b-pagbtn">2</button>
+      <button class="b-pagbtn">3</button>
+      &nbsp;
+      <div class="pay-grid">
+        <div class="pay-card act-b"><i class="fas fa-money-bill"></i>Efectivo</div>
+        <div class="pay-card"><i class="fas fa-qrcode"></i>QR</div>
+        <div class="pay-card"><i class="fas fa-credit-card"></i>Tarjeta</div>
+      </div>
+      &nbsp;
+      <button class="b-toggle active sm"><i class="fas fa-arrow-up-z-a"></i> Precio ↑</button>
+      <button class="b-toggle sm">Stock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- VARIANTE C -->
+<!-- ════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">VARIANTE C — Navy #0f2d57 (marino muy oscuro)</div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="badge badge-c">C</span>
+      <span style="font-size:13px;color:#64748b">Borde 2px · Fondo transparente · Color #0f2d57</span>
+    </div>
+    <div class="row">
+      <div class="label">btn-primary / btn-outline (ahora solo borde)</div>
+      <button class="c-primary"><i class="fas fa-save"></i> Guardar</button>
+      <button class="c-primary"><i class="fas fa-plus"></i> Nuevo</button>
+      <button class="c-outline"><i class="fas fa-upload"></i> Subir imagen</button>
+      <button class="c-outline sm"><i class="fas fa-eye"></i> Ver</button>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Tabs de categorías (POS — "Todos")</div>
+      <div class="demo-bar">
+        <button class="c-tab active">Todos</button>
+        <button class="c-tab">Cables</button>
+        <button class="c-tab">Audio</button>
+        <button class="c-tab">Drones</button>
+        <button class="c-tab">Gaming</button>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="row">
+      <div class="label">Paginación / Método de pago / Toggles</div>
+      <button class="c-pagbtn active">1</button>
+      <button class="c-pagbtn">2</button>
+      <button class="c-pagbtn">3</button>
+      &nbsp;
+      <div class="pay-grid">
+        <div class="pay-card act-c"><i class="fas fa-money-bill"></i>Efectivo</div>
+        <div class="pay-card"><i class="fas fa-qrcode"></i>QR</div>
+        <div class="pay-card"><i class="fas fa-credit-card"></i>Tarjeta</div>
+      </div>
+      &nbsp;
+      <button class="c-toggle active sm"><i class="fas fa-arrow-up-z-a"></i> Precio ↑</button>
+      <button class="c-toggle sm">Stock</button>
+    </div>
+  </div>
+</div>
+
+<p style="font-size:12px;color:#94a3b8;margin-top:8px">
+  Cuando elijas la variante (A, B o C), lo aplicamos a <code>styles.css</code> del proyecto principal.
+</p>
+
+</body>
+</html>

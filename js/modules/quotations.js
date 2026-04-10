@@ -223,7 +223,7 @@ const QuotationsModule = {
       </div>
 
       <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button class="btn btn-primary" onclick="QuotationsModule.saveQuote()">
           <i class="fas fa-save"></i> ${id ? 'Actualizar' : 'Crear'} Cotización
         </button>
@@ -317,7 +317,7 @@ const QuotationsModule = {
           <div class="form-group"><label style="font-size:11px">Email</label><input class="form-control" id="qfNcEmail" placeholder="correo@ejemplo.com" /></div>
         </div>
         <button class="btn btn-sm btn-primary" onclick="QuotationsModule._confirmNewClient()"><i class="fas fa-check"></i> Confirmar cliente</button>
-        <button class="btn btn-sm btn-secondary" onclick="QuotationsModule._clearClient()" style="margin-left:6px">Cancelar</button>
+        <button class="btn btn-sm btn-cancel" onclick="QuotationsModule._clearClient()" style="margin-left:6px">Cancelar</button>
       </div>`;
   },
 

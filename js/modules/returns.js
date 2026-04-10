@@ -266,7 +266,7 @@ const ReturnsModule = {
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeModalDirect()">Cancelar</button>
+        <button type="button" class="btn btn-cancel" onclick="closeModalDirect()">Cancelar</button>
         <button type="submit" class="btn btn-danger"><i class="fas fa-rotate-left"></i> Registrar Devolución</button>
       </div>
     </form>`, 'modal-lg');
