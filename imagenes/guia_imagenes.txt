@@ -156,7 +156,7 @@ CATEGORÍA C08 — REDES Y STREAMING (12 imágenes)  Prefijo: RED
   RED009.webp  →  Raspberry Pi 4 Model B 4GB                  "Raspberry Pi 4 Model B product"
   RED010.webp  →  Powerline Adapter TP-Link AV1000 x2        "TP-Link AV1000 powerline adapter"
   RED011.webp  →  Antena WiFi Externa 9dBi RP-SMA             "9dBi external WiFi antenna"
-  RED012.webp  →  Roku Streaming Stick 4K+                    "Roku Streaming Stick 4K product"
+  RED012.webp  →  Access Point TP-Link EAP225 AC1350           "TP-Link EAP225 access point product white background"
 
 ────────────────────────────────────────────────────────────────────────────────────
 IMÁGENES DEL SISTEMA  (guardar en imagenes/sistema/)
